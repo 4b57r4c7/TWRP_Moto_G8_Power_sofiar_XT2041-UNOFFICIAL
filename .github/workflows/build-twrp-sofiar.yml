@@ -1,0 +1,97 @@
+name: Build TWRP - sofiar
+
+on:
+  workflow_dispatch:   # ръчно стартиране от Actions таба в GitHub
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 350   # GitHub Actions free tier лимит е 360 min/job
+    steps:
+      - name: Free disk space
+        run: |
+          echo "=== Преди чистене ==="
+          df -h
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /opt/hostedtoolcache/CodeQL
+          sudo rm -rf /usr/local/.ghcup
+          sudo rm -rf /usr/share/swift
+          sudo docker image prune --all --force || true
+          sudo apt-get clean
+          echo "=== След чистене ==="
+          df -h
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            git-core gnupg flex bison build-essential zip curl \
+            zlib1g-dev libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev \
+            libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc \
+            unzip fontconfig python3 python-is-python3 bc rsync bc \
+            liblz4-tool libssl-dev
+
+      - name: Install repo tool
+        run: |
+          mkdir -p ~/bin
+          curl -s https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+          chmod a+x ~/bin/repo
+          echo "$HOME/bin" >> "$GITHUB_PATH"
+
+      - name: Configure git
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@users.noreply.github.com"
+          git config --global color.ui false
+
+      - name: Repo init (TWRP AOSP minimal manifest, shallow)
+        run: |
+          mkdir -p ~/twrp && cd ~/twrp
+          repo init --depth=1 \
+            -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git \
+            -b twrp-12.1
+
+      - name: Add local manifest (device tree + kernel)
+        run: |
+          mkdir -p ~/twrp/.repo/local_manifests
+          cp "$GITHUB_WORKSPACE/local_manifest.xml" ~/twrp/.repo/local_manifests/roomservice.xml
+
+      - name: Repo sync
+        run: |
+          cd ~/twrp
+          repo sync -c -j"$(nproc)" --force-sync --no-clone-bundle --no-tags --optimized-fetch
+          df -h
+
+      - name: Copy in device tree
+        run: |
+          mkdir -p ~/twrp/device/motorola/sofiar
+          cp -rv "$GITHUB_WORKSPACE/device_motorola_sofiar/." ~/twrp/device/motorola/sofiar/
+          echo "=== Съдържание на device/motorola/sofiar ==="
+          find ~/twrp/device/motorola/sofiar -type f
+
+      - name: Build recovery image
+        run: |
+          cd ~/twrp
+          export ALLOW_MISSING_DEPENDENCIES=true
+          source build/envsetup.sh
+          lunch twrp_sofiar-eng
+          mka recoveryimage 2>&1 | tee build.log
+
+      - name: Upload recovery image
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: twrp-sofiar-recovery
+          path: |
+            ~/twrp/out/target/product/sofiar/recovery.img
+          if-no-files-found: warn
+
+      - name: Upload build log (за диагностика ако падне)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: ~/twrp/build.log
+          if-no-files-found: ignore

@@ -1,0 +1,41 @@
+# TWRP recovery.fstab за Motorola Moto G8 Power (sofiar)
+# Изграден от РЕАЛНИ данни, извлечени от stock recovery.img
+# (build RETEU 11 RPES31.Q4U-47-35-12), не от чужд device tree.
+#
+# Формат: <mount-point>  <fstype>  <device>  [device2]  [flags]
+# (Забележка: TWRP синтаксисът е различен от Android init fstab-а,
+#  който извадихме - там е <src> <mnt> <type> <mnt_flags> <fs_mgr_flags>)
+
+# --- Основни filesystem дялове (данни от реалния stock fstab) ---
+/system         ext4    /dev/block/bootdevice/by-name/system                     flags=slotselect;display="System"
+/metadata       ext4    /dev/block/bootdevice/by-name/metadata                   flags=display="Metadata"
+/data           f2fs    /dev/block/bootdevice/by-name/userdata                   flags=fileencryption=ice:aes-256-cts;forceencrypt;display="Data"
+/sdcard         vfat    /dev/block/mmcblk1p1                                     flags=display="MicroSD";storage;wipeingui;removable
+
+# --- Raw/flashable дялове (emmc тип = не се mount-ват, само flash/backup) ---
+/boot           emmc    /dev/block/bootdevice/by-name/boot                       flags=slotselect;display="Boot"
+/recovery       emmc    /dev/block/bootdevice/by-name/recovery                   flags=slotselect;display="Recovery"
+/misc           emmc    /dev/block/bootdevice/by-name/misc                       flags=display="Misc"
+
+# --- Допълнителни дялове, потвърдени от реалната GPT (не бяха в
+#     минималния stock recovery.fstab, но са нужни за пълен TWRP
+#     backup/restore функционал) - ТРЯБВА ДА СЕ ПРОВЕРЯТ при теста ---
+/vendor         ext4    /dev/block/bootdevice/by-name/vendor                     flags=slotselect;display="Vendor"
+/dtbo           emmc    /dev/block/bootdevice/by-name/dtbo                       flags=slotselect;display="DTBO"
+/vbmeta         emmc    /dev/block/bootdevice/by-name/vbmeta                     flags=slotselect;display="vbmeta";backup=1;flashonboot=1
+/persist        ext4    /dev/block/bootdevice/by-name/persist                    flags=display="Persist";backup=1
+
+# --- Виртуален дял, изискван от TWRP за да разпознае dynamic partitions схемата ---
+/super          emmc    /dev/block/bootdevice/by-name/super
+
+# ЗАБЕЛЕЖКИ ЗА СЛЕДВАЩА ПРОВЕРКА:
+# 1. /system, /vendor може да се наложи да получат "logical;" flag
+#    (за dynamic partitions поддръжка) - стойността по-горе е БЕЗ него,
+#    защото точно такъв беше реалният stock fstab. Ако при boot тест
+#    system/vendor не се mount-нат правилно, добави "logical;" в flags.
+# 2. /product дял не се вижда в GPT-то directly - вероятно е логическа
+#    партиция вътре в /super заедно със system/vendor. Ако потрябва
+#    отделен TWRP mount за него, ще го добавим след теста.
+# 3. ICE fileencryption (aes-256-cts) за /data - декриптирането в TWRP
+#    за тази специфична crypto конфигурация НЕ Е гарантирано да проработи
+#    от пръв опит (виж бележката в чата за 2020 WIP thread проблемите).

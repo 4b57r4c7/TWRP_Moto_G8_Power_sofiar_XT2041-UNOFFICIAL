@@ -1,0 +1,10 @@
+* text=auto
+
+*.yml text eol=lf
+*.yaml text eol=lf
+*.sh text eol=lf
+*.fstab text eol=lf
+*.xml text eol=lf
+*.mk text eol=lf
+*.py text eol=lf
+*.rc text eol=lf

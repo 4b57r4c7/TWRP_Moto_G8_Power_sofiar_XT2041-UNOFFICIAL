@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <remote name="github" fetch="https://github.com/" />
+
+  <!-- Общ (common) tree за sm6125/trinket платформата - готов, поддържан от trinket-common -->
+  <project name="trinket-common/teamwin_device_motorola_sm6125-common"
+           path="device/motorola/sm6125-common"
+           remote="github"
+           revision="general_tree" />
+
+  <!-- Device-specific TWRP tree за sofiar НЕ е отделен project тук -
+       държим го в папка device_motorola_sofiar/ в същия repo и CI
+       workflow-ът го копира директно в device/motorola/sofiar/
+       (виж стъпка "Copy in device tree" в build-twrp-sofiar.yml) -->
+
+  <!-- Kernel source за trinket платформата (community-derived, 4.14) -->
+  <project name="codyf86/android_kernel_motorola_trinket"
+           path="kernel/motorola/trinket"
+           remote="github"
+           revision="kernel.lnx.4.14.r11-rel" />
+</manifest>
