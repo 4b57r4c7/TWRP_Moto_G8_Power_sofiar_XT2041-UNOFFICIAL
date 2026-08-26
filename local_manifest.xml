@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
-  <remote name="github" fetch="https://github.com/" />
+  <!-- НЕ дефинираме remote "github" тук - базовият
+       platform_manifest_twrp_aosp manifest вече го прави, а repo tool
+       не позволява да се предефинира със същото име (точно това
+       причини "remote already exists with different attributes"). -->
 
   <!-- Общ (common) tree за sm6125/trinket платформата - готов, поддържан от trinket-common -->
   <project name="trinket-common/teamwin_device_motorola_sm6125-common"
