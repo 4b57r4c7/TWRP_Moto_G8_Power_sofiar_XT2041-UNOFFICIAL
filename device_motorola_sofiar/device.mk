@@ -26,5 +26,3 @@ TARGET_2ND_CPU_VARIANT := generic
 
 # fstab-ът вече се копира автоматично чрез TARGET_RECOVERY_FSTAB
 # в BoardConfig.mk - не е нужен допълнителен PRODUCT_COPY_FILES ред.
-
-$(call inherit-product, $(SRC_TARGET_DIR)/product/embedded.mk)

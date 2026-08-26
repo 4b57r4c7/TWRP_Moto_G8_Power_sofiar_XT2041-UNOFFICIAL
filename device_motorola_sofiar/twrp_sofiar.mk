@@ -1,6 +1,5 @@
 # twrp_sofiar.mk - product makefile, избиран от `lunch twrp_sofiar-eng`
 
-$(call inherit-product, $(SRC_TARGET_DIR)/product/embedded.mk)
 $(call inherit-product, device/motorola/sofiar/device.mk)
 
 PRODUCT_NAME := twrp_sofiar
