@@ -97,6 +97,16 @@ jobs:
             echo "Файлът вече не съществува на този път - провери дали проблемът е решен по друг начин."
           fi
 
+      - name: Debug - locate gatekeeper module duplicate
+        run: |
+          cd ~/twrp
+          echo "=== PRODUCT_PACKAGES/LOCAL_MODULE референции към gatekeeper ==="
+          grep -rn "gatekeeper" device/ vendor/ hardware/interfaces/ 2>/dev/null \
+            | grep -iE "PRODUCT_PACKAGES|LOCAL_MODULE" || echo "(нищо намерено с този grep - виж по-широко по-долу)"
+          echo ""
+          echo "=== Всички Android.mk/Android.bp файлове, споменаващи gatekeeper ==="
+          grep -rl "gatekeeper" device/ vendor/twrp/ hardware/interfaces/gatekeeper/ 2>/dev/null || true
+
       - name: Build recovery image
         run: |
           set -o pipefail
