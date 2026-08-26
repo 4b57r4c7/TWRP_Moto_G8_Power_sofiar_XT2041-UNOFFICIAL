@@ -8,6 +8,9 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 350   # GitHub Actions free tier лимит е 360 min/job
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
       - name: Free disk space
         run: |
           echo "=== Преди чистене ==="
