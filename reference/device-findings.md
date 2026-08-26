@@ -53,12 +53,24 @@ cmdline включва `androidboot.hab.product=sofiar` - потвърждава
   проработи от пръв опит (виж 2020-годишния XDA WIP thread за sofiar,
   който имаше точно този проблем).
 - `/system` се mount-ва през обикновен `by-name` path БЕЗ изричен
-  `logical` flag в stock fstab-а, въпреки че `super` дял съществува.
-  За TWRP версията добавихме `logical`-съвместим подход в
-  `device_motorola_sofiar/recovery.fstab`, но **трябва да се
-  потвърди при реален boot тест** дали е нужен изричен `logical` flag.
+  `logical` flag в stock fstab-а, но `ro.boot.dynamic_partitions=true`
+  в `prop.default` ПОТВЪРЖДАВА dynamic partitions активни за това
+  устройство - добавихме `logical` flag на system/vendor в
+  `device_motorola_sofiar/recovery.fstab` (вече не е предположение).
 - `/boot`, `/recovery`, `/misc` са тип `emmc` (raw/flashable, не
   filesystem mount) - очаквано за тези служебни дялове.
+
+## Build/version данни (от prop.default, вътре в recovery ramdisk-а)
+
+- `ro.build.version.release=11`, `ro.build.version.sdk=30`
+- `ro.build.version.security_patch=2022-02-01`
+- `ro.build.fingerprint=motorola/sofiar_retail/sofiar:11/RPES31.Q4U-47-35-12/24aaf7:user/release-keys`
+- `ro.boot.dynamic_partitions=true` - **потвърждава dynamic partitions**,
+  разрешава несигурността за `logical` flag-а по-горе.
+- `ro.crypto.volume.filenames_mode=aes-256-cts`,
+  `ro.crypto.dm_default_key.options_format.version=2`
+- `ro.sf.lcd_density=420`, `ro.board.platform=trinket`,
+  `ro.vndk.version=30`, `ro.treble.enabled=true`
 
 ## Firmware source
 
