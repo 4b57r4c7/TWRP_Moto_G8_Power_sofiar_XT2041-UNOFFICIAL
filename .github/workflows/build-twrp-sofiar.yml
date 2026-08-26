@@ -11,6 +11,13 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Debug - list workspace contents
+        run: |
+          echo "=== GITHUB_WORKSPACE = $GITHUB_WORKSPACE ==="
+          ls -la "$GITHUB_WORKSPACE"
+          echo "=== рекурсивно ==="
+          find "$GITHUB_WORKSPACE" -maxdepth 3
+
       - name: Free disk space
         run: |
           echo "=== Преди чистене ==="
@@ -74,8 +81,25 @@ jobs:
           echo "=== Съдържание на device/motorola/sofiar ==="
           find ~/twrp/device/motorola/sofiar -type f
 
+      - name: Workaround - remove duplicate Soong module in common tree
+        run: |
+          # bootctrl/1.1/impl/Android.bp дублира дефиниция на
+          # "android.hardware.boot@1.1-impl-qti", вече дефиниран в
+          # bootctrl/Android.bp (по-горе в йерархията) - Soong не
+          # позволява две дефиниции със същото име. Махаме само
+          # дублиращия Android.bp, не цялата директория (source
+          # файловете вътре остават достъпни ако горният модул ги
+          # референсва по относителен път).
+          DUP_FILE=~/twrp/device/motorola/sm6125-common/bootctrl/1.1/impl/Android.bp
+          if [ -f "$DUP_FILE" ]; then
+            rm -v "$DUP_FILE"
+          else
+            echo "Файлът вече не съществува на този път - провери дали проблемът е решен по друг начин."
+          fi
+
       - name: Build recovery image
         run: |
+          set -o pipefail
           cd ~/twrp
           export ALLOW_MISSING_DEPENDENCIES=true
           source build/envsetup.sh
