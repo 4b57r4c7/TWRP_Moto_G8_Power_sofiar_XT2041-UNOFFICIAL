@@ -121,7 +121,7 @@ jobs:
           export ALLOW_MISSING_DEPENDENCIES=true
           source build/envsetup.sh
           lunch twrp_sofiar-eng
-          mka recoveryimage 2>&1 | tee build.log
+          mka bootimage 2>&1 | tee build.log
 
       - name: Upload recovery image
         if: always()
