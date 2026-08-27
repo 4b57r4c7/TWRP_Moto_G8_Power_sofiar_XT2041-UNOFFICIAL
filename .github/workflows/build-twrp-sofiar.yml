@@ -112,12 +112,17 @@ jobs:
       - name: Debug - locate gatekeeper module duplicate
         run: |
           cd ~/twrp
-          echo "=== PRODUCT_PACKAGES/LOCAL_MODULE референции към gatekeeper ==="
-          grep -rn "gatekeeper" device/ vendor/ hardware/interfaces/ 2>/dev/null \
-            | grep -iE "PRODUCT_PACKAGES|LOCAL_MODULE" || echo "(нищо намерено с този grep - виж по-широко по-долу)"
+          echo "=== Пълно съдържание на device/motorola/sm6125-common/common.mk ==="
+          cat device/motorola/sm6125-common/common.mk
           echo ""
-          echo "=== Всички Android.mk/Android.bp файлове, споменаващи gatekeeper ==="
-          grep -rl "gatekeeper" device/ vendor/twrp/ hardware/interfaces/gatekeeper/ 2>/dev/null || true
+          echo "=== PRODUCT_COPY_FILES редове, съдържащи gatekeeper (всякакви .mk файлове) ==="
+          grep -rn "gatekeeper" --include="*.mk" device/ vendor/ 2>/dev/null
+          echo ""
+          echo "=== Soong 'name:' декларации за gatekeeper (.bp файлове) ==="
+          grep -rn -B2 'name:.*gatekeeper' --include="*.bp" device/ vendor/ hardware/interfaces/gatekeeper/ 2>/dev/null
+          echo ""
+          echo "=== Всички Android.mk файлове (стар стил) с LOCAL_MODULE...gatekeeper ==="
+          grep -rn "LOCAL_MODULE" --include="*.mk" device/ vendor/ 2>/dev/null | grep -i gatekeeper
 
       - name: Build recovery image
         run: |
