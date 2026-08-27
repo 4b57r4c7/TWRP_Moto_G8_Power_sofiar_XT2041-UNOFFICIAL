@@ -97,6 +97,18 @@ jobs:
             echo "Файлът вече не съществува на този път - провери дали проблемът е решен по друг начин."
           fi
 
+          # android.hardware.gatekeeper@1.0.so е ръчно поставен prebuilt
+          # blob в recovery/root overlay-а, дублиращ автоматично
+          # генерираната HIDL interface библиотека от
+          # hardware/interfaces/gatekeeper/1.0/ - build системата вече
+          # я осигурява коректно сама, излишният blob само пречи.
+          DUP_GATEKEEPER=~/twrp/device/motorola/sm6125-common/recovery/root/system/lib64/android.hardware.gatekeeper@1.0.so
+          if [ -f "$DUP_GATEKEEPER" ]; then
+            rm -v "$DUP_GATEKEEPER"
+          else
+            echo "gatekeeper .so вече не съществува на този път - провери дали проблемът е решен по друг начин."
+          fi
+
       - name: Debug - locate gatekeeper module duplicate
         run: |
           cd ~/twrp
