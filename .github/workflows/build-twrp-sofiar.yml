@@ -114,6 +114,7 @@ jobs:
           set -o pipefail
           cd ~/twrp
           sed -i '/android\.hardware\.gatekeeper@1\.0\.so/d' device/motorola/sm6125-common/common.mk
+          sed -i '/android\.hardware\.keymaster@4\.0\.so/d' device/motorola/sm6125-common/common.mk
           export ALLOW_MISSING_DEPENDENCIES=true
           source build/envsetup.sh
           lunch twrp_sofiar-eng
