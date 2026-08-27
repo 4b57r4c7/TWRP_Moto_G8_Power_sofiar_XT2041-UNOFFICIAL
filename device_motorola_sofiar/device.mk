@@ -9,6 +9,12 @@ LOCAL_PATH := device/motorola/sofiar
 # device/motorola/sm6125-common/ след repo sync и коригирай.
 $(call inherit-product, device/motorola/sm6125-common/common.mk)
 
+# common.mk включва generic AOSP gatekeeper HIDL библиотеката в
+# PRODUCT_PACKAGES, но sm6125-common вече носи готов QTI prebuilt на
+# СЪЩИЯ изходен път (recovery/root/system/lib64/android.hardware.gatekeeper@1.0.so)
+# - двете се сблъскват при install. Маха се generic версията, остава prebuilt-ът.
+PRODUCT_PACKAGES -= android.hardware.gatekeeper@1.0
+
 PRODUCT_DEVICE := sofiar
 
 # Архитектура (arm64, потвърдена от kernel header анализа по-рано)
