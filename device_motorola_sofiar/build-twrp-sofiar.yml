@@ -1,0 +1,156 @@
+name: Build TWRP - sofiar
+
+on:
+  workflow_dispatch:   # ръчно стартиране от Actions таба в GitHub
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 350   # GitHub Actions free tier лимит е 360 min/job
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Debug - list workspace contents
+        run: |
+          echo "=== GITHUB_WORKSPACE = $GITHUB_WORKSPACE ==="
+          ls -la "$GITHUB_WORKSPACE"
+          echo "=== рекурсивно ==="
+          find "$GITHUB_WORKSPACE" -maxdepth 3
+
+      - name: Free disk space
+        run: |
+          echo "=== Преди чистене ==="
+          df -h
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /opt/hostedtoolcache/CodeQL
+          sudo rm -rf /usr/local/.ghcup
+          sudo rm -rf /usr/share/swift
+          sudo docker image prune --all --force || true
+          sudo apt-get clean
+          echo "=== След чистене ==="
+          df -h
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            git-core gnupg flex bison build-essential zip curl \
+            zlib1g-dev libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev \
+            libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc \
+            unzip fontconfig python3 python-is-python3 bc rsync bc \
+            liblz4-tool libssl-dev
+
+      - name: Install repo tool
+        run: |
+          mkdir -p ~/bin
+          curl -s https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+          chmod a+x ~/bin/repo
+          echo "$HOME/bin" >> "$GITHUB_PATH"
+
+      - name: Configure git
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@users.noreply.github.com"
+          git config --global color.ui false
+
+      - name: Repo init (TWRP AOSP minimal manifest, shallow)
+        run: |
+          mkdir -p ~/twrp && cd ~/twrp
+          repo init --depth=1 \
+            -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git \
+            -b twrp-12.1
+
+      - name: Add local manifest (device tree + kernel)
+        run: |
+          mkdir -p ~/twrp/.repo/local_manifests
+          cp "$GITHUB_WORKSPACE/local_manifest.xml" ~/twrp/.repo/local_manifests/roomservice.xml
+
+      - name: Repo sync
+        run: |
+          cd ~/twrp
+          repo sync -c -j"$(nproc)" --force-sync --no-clone-bundle --no-tags --optimized-fetch
+          df -h
+
+      - name: Copy in device tree
+        run: |
+          mkdir -p ~/twrp/device/motorola/sofiar
+          cp -rv "$GITHUB_WORKSPACE/device_motorola_sofiar/." ~/twrp/device/motorola/sofiar/
+          echo "=== Съдържание на device/motorola/sofiar ==="
+          find ~/twrp/device/motorola/sofiar -type f
+
+      - name: Workaround - remove duplicate Soong module in common tree
+        run: |
+          # bootctrl/1.1/impl/Android.bp дублира дефиниция на
+          # "android.hardware.boot@1.1-impl-qti", вече дефиниран в
+          # bootctrl/Android.bp (по-горе в йерархията) - Soong не
+          # позволява две дефиниции със същото име. Махаме само
+          # дублиращия Android.bp, не цялата директория (source
+          # файловете вътре остават достъпни ако горният модул ги
+          # референсва по относителен път).
+          DUP_FILE=~/twrp/device/motorola/sm6125-common/bootctrl/1.1/impl/Android.bp
+          if [ -f "$DUP_FILE" ]; then
+            rm -v "$DUP_FILE"
+          else
+            echo "Файлът вече не съществува на този път - провери дали проблемът е решен по друг начин."
+          fi
+
+          # PRODUCT_COPY_FILES редът в common.mk за
+          # android.hardware.gatekeeper@1.0.so се сблъсква с
+          # автоматично компилираната Soong hidl_interface библиотека
+          # (hardware/interfaces/gatekeeper/1.0/Android.bp, name:
+          # "android.hardware.gatekeeper@1.0") - двете се целят в
+          # СЪЩИЯ изходен път. Изтриването на source файла не помогна
+          # (самият PRODUCT_COPY_FILES ред регистрира Make правилото
+          # независимо от съществуването на файла) - маха се самия ред.
+          COMMON_MK=~/twrp/device/motorola/sm6125-common/common.mk
+          if [ -f "$COMMON_MK" ]; then
+            sed -i '\|android\.hardware\.gatekeeper@1\.0\.so:recovery/root/system/lib64/android\.hardware\.gatekeeper@1\.0\.so|d' "$COMMON_MK"
+            echo "Ред за gatekeeper@1.0.so премахнат от common.mk. Проверка:"
+            grep -n "gatekeeper" "$COMMON_MK" || echo "(няма повече gatekeeper референции)"
+          else
+            echo "common.mk не намерен на този път!"
+          fi
+
+      - name: Debug - locate gatekeeper module duplicate
+        run: |
+          cd ~/twrp
+          echo "=== Пълно съдържание на device/motorola/sm6125-common/common.mk ==="
+          cat device/motorola/sm6125-common/common.mk
+          echo ""
+          echo "=== PRODUCT_COPY_FILES редове, съдържащи gatekeeper (всякакви .mk файлове) ==="
+          grep -rn "gatekeeper" --include="*.mk" device/ vendor/ 2>/dev/null
+          echo ""
+          echo "=== Soong 'name:' декларации за gatekeeper (.bp файлове) ==="
+          grep -rn -B2 'name:.*gatekeeper' --include="*.bp" device/ vendor/ hardware/interfaces/gatekeeper/ 2>/dev/null
+          echo ""
+          echo "=== Всички Android.mk файлове (стар стил) с LOCAL_MODULE...gatekeeper ==="
+          grep -rn "LOCAL_MODULE" --include="*.mk" device/ vendor/ 2>/dev/null | grep -i gatekeeper
+
+      - name: Build recovery image
+        run: |
+          set -o pipefail
+          cd ~/twrp
+          export ALLOW_MISSING_DEPENDENCIES=true
+          source build/envsetup.sh
+          lunch twrp_sofiar-eng
+          mka recoveryimage 2>&1 | tee build.log
+
+      - name: Upload recovery image
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: twrp-sofiar-recovery
+          path: |
+            ~/twrp/out/target/product/sofiar/recovery.img
+          if-no-files-found: warn
+
+      - name: Upload build log (за диагностика ако падне)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: ~/twrp/build.log
+          if-no-files-found: ignore
