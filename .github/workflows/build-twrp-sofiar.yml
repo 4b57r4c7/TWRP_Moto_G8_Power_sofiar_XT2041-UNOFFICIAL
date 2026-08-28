@@ -113,16 +113,30 @@ jobs:
           else
             echo "common.mk не намерен на този път!"
           fi
-          
+
+      - name: Debug - locate gatekeeper module duplicate
+        run: |
+          cd ~/twrp
+          echo "=== Пълно съдържание на device/motorola/sm6125-common/common.mk ==="
+          cat device/motorola/sm6125-common/common.mk
+          echo ""
+          echo "=== PRODUCT_COPY_FILES редове, съдържащи gatekeeper (всякакви .mk файлове) ==="
+          grep -rn "gatekeeper" --include="*.mk" device/ vendor/ 2>/dev/null
+          echo ""
+          echo "=== Soong 'name:' декларации за gatekeeper (.bp файлове) ==="
+          grep -rn -B2 'name:.*gatekeeper' --include="*.bp" device/ vendor/ hardware/interfaces/gatekeeper/ 2>/dev/null
+          echo ""
+          echo "=== Всички Android.mk файлове (стар стил) с LOCAL_MODULE...gatekeeper ==="
+          grep -rn "LOCAL_MODULE" --include="*.mk" device/ vendor/ 2>/dev/null | grep -i gatekeeper
+
       - name: Build recovery image
         run: |
           set -o pipefail
           cd ~/twrp
-          sed -i '/android\.hardware\.gatekeeper@1\.0\.so/d' device/motorola/sm6125-common/common.mk'
           export ALLOW_MISSING_DEPENDENCIES=true
           source build/envsetup.sh
           lunch twrp_sofiar-eng
-          mka bootimage 2>&1 | tee build.log
+          mka recoveryimage 2>&1 | tee build.log
 
       - name: Upload recovery image
         if: always()
