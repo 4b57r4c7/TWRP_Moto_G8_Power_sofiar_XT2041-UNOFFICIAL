@@ -129,6 +129,10 @@ jobs:
             echo "common.mk не намерен на този път!"
           fi
 
+          echo "=== Диагностика: съдържание на bootctrl/Android.mk ==="
+          cat ~/twrp/device/motorola/sm6125-common/bootctrl/Android.mk || echo "(файлът не съществува)"
+          echo "=== край на диагностиката ==="
+
       - name: Build recovery image
         run: |
           set -o pipefail
