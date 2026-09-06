@@ -133,6 +133,10 @@ jobs:
           cat ~/twrp/device/motorola/sm6125-common/bootctrl/Android.mk || echo "(файлът не съществува)"
           echo "=== край на диагностиката ==="
 
+          echo "=== Диагностика: съдържание на sm6125-common/Android.mk (top-level) ==="
+          cat ~/twrp/device/motorola/sm6125-common/Android.mk || echo "(файлът не съществува)"
+          echo "=== край на диагностиката ==="
+
       - name: Build recovery image
         run: |
           set -o pipefail
