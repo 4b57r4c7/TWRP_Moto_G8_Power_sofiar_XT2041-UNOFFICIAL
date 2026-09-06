@@ -11,13 +11,6 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Debug - list workspace contents
-        run: |
-          echo "=== GITHUB_WORKSPACE = $GITHUB_WORKSPACE ==="
-          ls -la "$GITHUB_WORKSPACE"
-          echo "=== рекурсивно ==="
-          find "$GITHUB_WORKSPACE" -maxdepth 3
-
       - name: Free disk space
         run: |
           echo "=== Преди чистене ==="
@@ -113,21 +106,6 @@ jobs:
           else
             echo "common.mk не намерен на този път!"
           fi
-
-      - name: Debug - locate gatekeeper module duplicate
-        run: |
-          cd ~/twrp
-          echo "=== Пълно съдържание на device/motorola/sm6125-common/common.mk ==="
-          cat device/motorola/sm6125-common/common.mk
-          echo ""
-          echo "=== PRODUCT_COPY_FILES редове, съдържащи gatekeeper (всякакви .mk файлове) ==="
-          grep -rn "gatekeeper" --include="*.mk" device/ vendor/ 2>/dev/null
-          echo ""
-          echo "=== Soong 'name:' декларации за gatekeeper (.bp файлове) ==="
-          grep -rn -B2 'name:.*gatekeeper' --include="*.bp" device/ vendor/ hardware/interfaces/gatekeeper/ 2>/dev/null
-          echo ""
-          echo "=== Всички Android.mk файлове (стар стил) с LOCAL_MODULE...gatekeeper ==="
-          grep -rn "LOCAL_MODULE" --include="*.mk" device/ vendor/ 2>/dev/null | grep -i gatekeeper
 
       - name: Build recovery image
         run: |
