@@ -101,8 +101,13 @@ jobs:
           COMMON_MK=~/twrp/device/motorola/sm6125-common/common.mk
           if [ -f "$COMMON_MK" ]; then
             sed -i '\|android\.hardware\.gatekeeper@1\.0\.so:recovery/root/system/lib64/android\.hardware\.gatekeeper@1\.0\.so|d' "$COMMON_MK"
-            echo "Ред за gatekeeper@1.0.so премахнат от common.mk. Проверка:"
-            grep -n "gatekeeper" "$COMMON_MK" || echo "(няма повече gatekeeper референции)"
+            # Същия клас конфликт, сега за keymaster@4.0.so - HIDL
+            # библиотеката се компилира автоматично от
+            # hardware/interfaces/keymaster/4.0/, PRODUCT_COPY_FILES
+            # редът тук се сблъсква на същия изходен път.
+            sed -i '\|android\.hardware\.keymaster@4\.0\.so:recovery/root/system/lib64/android\.hardware\.keymaster@4\.0\.so|d' "$COMMON_MK"
+            echo "Редове за gatekeeper@1.0.so и keymaster@4.0.so премахнати от common.mk. Проверка:"
+            grep -n "gatekeeper@1.0.so:recovery/root/system/lib64\|keymaster@4.0.so:recovery/root/system/lib64" "$COMMON_MK" || echo "(няма повече такива редове)"
           else
             echo "common.mk не намерен на този път!"
           fi
