@@ -129,13 +129,21 @@ jobs:
             echo "common.mk не намерен на този път!"
           fi
 
-          echo "=== Диагностика: съдържание на bootctrl/Android.mk ==="
-          cat ~/twrp/device/motorola/sm6125-common/bootctrl/Android.mk || echo "(файлът не съществува)"
-          echo "=== край на диагностиката ==="
-
-          echo "=== Диагностика: съдържание на sm6125-common/Android.mk (top-level) ==="
-          cat ~/twrp/device/motorola/sm6125-common/Android.mk || echo "(файлът не съществува)"
-          echo "=== край на диагностиката ==="
+          # bootctrl/Android.mk дефинира bootctrl.trinket ДВА ПЪТИ -
+          # веднъж като shared library, веднъж като static library.
+          # Обикновено такъв патерн е ОК в AOSP, но в тази TWRP
+          # build/make версия причинява "already defined" конфликт.
+          # HAL модули обичайно се зареждат динамично (dlopen), затова
+          # static варианта е вероятно излишен - маха се той, оставя
+          # се само shared library блока.
+          BOOTCTRL_MK=~/twrp/device/motorola/sm6125-common/bootctrl/Android.mk
+          if [ -f "$BOOTCTRL_MK" ]; then
+            sed -i '/include \$(BUILD_SHARED_LIBRARY)/,/include \$(BUILD_STATIC_LIBRARY)/{/include \$(BUILD_SHARED_LIBRARY)/!d}' "$BOOTCTRL_MK"
+            echo "Static library блок премахнат от bootctrl/Android.mk. Резултат:"
+            cat "$BOOTCTRL_MK"
+          else
+            echo "bootctrl/Android.mk не намерен на този път!"
+          fi
 
       - name: Build recovery image
         run: |
