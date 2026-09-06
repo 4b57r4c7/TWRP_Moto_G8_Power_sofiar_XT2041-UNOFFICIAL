@@ -47,7 +47,12 @@ BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --dtb_offset $(BOARD_DTB_OFFSET)
 BOARD_INCLUDE_RECOVERY_DTBO := true
-BOARD_CUSTOM_BOOTIMG_MK := $(DEVICE_PATH)/bootimg.mk
+# BOARD_CUSTOM_BOOTIMG_MK махнат - нашият bootimg.mk е празен, което
+# караше ninja да няма никакво правило за recovery.img ("missing and
+# no known rule to make it"). Стандартното AOSP правило използва вече
+# конфигурираните BOARD_MKBOOTIMG_ARGS директно, без нужда от custom
+# makefile. Ако не поеме dtb-то коректно, следваща грешка ще покаже
+# какво точно липсва.
 
 # --- Партиции - РЕАЛНИ ДАННИ от GPT (виж reference/device-findings.md) ---
 BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864        # boot_a/b = 64MB
