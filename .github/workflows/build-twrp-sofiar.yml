@@ -100,6 +100,15 @@ jobs:
           # независимо от съществуването на файла) - маха се самия ред.
           COMMON_MK=~/twrp/device/motorola/sm6125-common/common.mk
           if [ -f "$COMMON_MK" ]; then
+            # COMMON_PATH се ползва навсякъде в common.mk
+            # ($(COMMON_PATH)/recovery/root/...) но никога не е
+            # дефинирана във файла - резолюира се до празен низ,
+            # което чупи ВСИЧКИ PRODUCT_COPY_FILES source пътища
+            # (ninja грешка: "missing and no known rule to make it"
+            # за литерален "/recovery/root/..." път без директория
+            # отпред). Добавяме дефиницията в самото начало.
+            sed -i '1i COMMON_PATH := device/motorola/sm6125-common' "$COMMON_MK"
+
             sed -i '\|android\.hardware\.gatekeeper@1\.0\.so:recovery/root/system/lib64/android\.hardware\.gatekeeper@1\.0\.so|d' "$COMMON_MK"
             # Същия клас конфликт, сега за keymaster@4.0.so - HIDL
             # библиотеката се компилира автоматично от
