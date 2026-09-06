@@ -106,8 +106,16 @@ jobs:
             # hardware/interfaces/keymaster/4.0/, PRODUCT_COPY_FILES
             # редът тук се сблъсква на същия изходен път.
             sed -i '\|android\.hardware\.keymaster@4\.0\.so:recovery/root/system/lib64/android\.hardware\.keymaster@4\.0\.so|d' "$COMMON_MK"
-            echo "Редове за gatekeeper@1.0.so и keymaster@4.0.so премахнати от common.mk. Проверка:"
-            grep -n "gatekeeper@1.0.so:recovery/root/system/lib64\|keymaster@4.0.so:recovery/root/system/lib64" "$COMMON_MK" || echo "(няма повече такива редове)"
+            # ICU библиотеките (libandroidicu/libicui18n/libicuuc) са
+            # стандартни AOSP системни библиотеки без hardware-специфика -
+            # AOSP build системата ги компилира сама наред с всичко
+            # останало, prebuilt копията в common.mk се сблъскват по
+            # същата причина като gatekeeper/keymaster по-горе.
+            sed -i '\|libandroidicu\.so:recovery/root/system/lib64/libandroidicu\.so|d' "$COMMON_MK"
+            sed -i '\|libicui18n\.so:recovery/root/system/lib64/libicui18n\.so|d' "$COMMON_MK"
+            sed -i '\|libicuuc\.so:recovery/root/system/lib64/libicuuc\.so|d' "$COMMON_MK"
+            echo "Редове за gatekeeper/keymaster/ICU премахнати от common.mk. Проверка:"
+            grep -n "gatekeeper@1.0.so:recovery/root/system/lib64\|keymaster@4.0.so:recovery/root/system/lib64\|libandroidicu.so:recovery\|libicui18n.so:recovery\|libicuuc.so:recovery" "$COMMON_MK" || echo "(няма повече такива редове)"
           else
             echo "common.mk не намерен на този път!"
           fi
