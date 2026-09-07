@@ -145,6 +145,15 @@ jobs:
             echo "bootctrl/Android.mk не намерен на този път!"
           fi
 
+          echo "=== Пълна структура на bootctrl/ папката ==="
+          find ~/twrp/device/motorola/sm6125-common/bootctrl -type f
+          echo ""
+          echo "=== Всички местa, дефиниращи LOCAL_MODULE := bootctrl.\$(TARGET_BOARD_PLATFORM) или сходно ==="
+          grep -rn "LOCAL_MODULE.*bootctrl" ~/twrp/device/motorola/sm6125-common/ 2>/dev/null || echo "(нищо)"
+          echo ""
+          echo "=== Всички Android.mk файлове в sm6125-common (пълен списък) ==="
+          find ~/twrp/device/motorola/sm6125-common -name "Android.mk"
+
       - name: Build recovery image
         run: |
           set -o pipefail
