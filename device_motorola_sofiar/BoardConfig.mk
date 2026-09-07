@@ -24,7 +24,14 @@ TARGET_2ND_CPU_VARIANT := kryo
 
 # --- Kernel source (community-derived, виж reference/device-findings.md) ---
 TARGET_KERNEL_SOURCE := kernel/motorola/trinket
-TARGET_KERNEL_CONFIG := vendor/sofiar_defconfig
+# TODO: няма отделен "sofiar_defconfig" в kernel source-а - структурата
+# е база defconfig (trinket-perf_defconfig) + отделен device fragment
+# (arch/arm64/configs/vendor/ext_config/moto-trinket-sofiar.config).
+# Тръгваме с base defconfig-а (perf вариант - вероятно production/
+# shipped конфигурация); ако нещо специфично за sofiar (сензори,
+# дисплей, тъч) не работи по-късно, ще трябва да интегрираме и
+# fragment-а отделно.
+TARGET_KERNEL_CONFIG := vendor/trinket-perf_defconfig
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
 # header_version 2 -> dtb е ОТДЕЛНА секция (не appended към kernel),

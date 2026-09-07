@@ -161,15 +161,6 @@ jobs:
             echo "bootctrl/Android.bp не намерен на този път!"
           fi
 
-          echo "=== Търсене на реалния defconfig файл в kernel source-а ==="
-          find ~/twrp/kernel/motorola/trinket/arch/arm64/configs -type f 2>/dev/null || echo "(папката не съществува на този път)"
-          echo ""
-          echo "=== По-широко търсене за 'sofiar' в целия kernel repo ==="
-          find ~/twrp/kernel/motorola/trinket -iname "*sofiar*" 2>/dev/null || echo "(нищо намерено)"
-          echo ""
-          echo "=== Всички defconfig файлове с 'sofia' или 'trinket' в името ==="
-          find ~/twrp/kernel/motorola/trinket -iname "*sofia*" -o -iname "*trinket*defconfig*" 2>/dev/null
-
       - name: Build recovery image
         run: |
           set -o pipefail
