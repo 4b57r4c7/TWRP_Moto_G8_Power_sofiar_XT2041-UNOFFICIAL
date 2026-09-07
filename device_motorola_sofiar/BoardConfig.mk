@@ -115,4 +115,12 @@ PLATFORM_VERSION := 11
 TW_THEME := portrait_hdpi
 
 # --- Общ (common) tree за sm6125/trinket платформата ---
+# common.mk копира десетки ELF binary/.so файлове през PRODUCT_COPY_FILES
+# (стар, но легитимен TWRP device tree подход) - по-новата build
+# система изисква такива да са декларирани като cc_prebuilt_* Soong
+# модули и отхвърля raw copy с "found ELF prebuilt in PRODUCT_COPY_FILES".
+# Този флаг изключва проверката за целия build (стандартен AOSP escape
+# hatch точно за такъв случай), вместо да пренаписваме всеки prebuilt.
+BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
+
 -include device/motorola/sm6125-common/BoardConfig.mk
