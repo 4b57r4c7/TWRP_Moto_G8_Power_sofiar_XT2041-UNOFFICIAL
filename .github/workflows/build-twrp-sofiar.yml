@@ -161,6 +161,20 @@ jobs:
             echo "bootctrl/Android.bp не намерен на този път!"
           fi
 
+          # Стар kernel source (scripts/dtc) генерира tentative
+          # definitions (yylloc) в flex/bison изхода по начин, който
+          # старият GNU ld мълчаливо сливаше, но модерният lld linker
+          # (използван от съвременния AOSP prebuilt clang toolchain)
+          # третира като хард "duplicate symbol" грешка. Стандартен
+          # фикс: -fcommon връща старото поведение за host tools.
+          DTC_MK=~/twrp/kernel/motorola/trinket/scripts/dtc/Makefile
+          if [ -f "$DTC_MK" ]; then
+            sed -i '1i HOST_EXTRACFLAGS += -fcommon' "$DTC_MK"
+            echo "Добавен -fcommon в scripts/dtc/Makefile"
+          else
+            echo "scripts/dtc/Makefile не намерен на този път!"
+          fi
+
       - name: Build recovery image
         run: |
           set -o pipefail
