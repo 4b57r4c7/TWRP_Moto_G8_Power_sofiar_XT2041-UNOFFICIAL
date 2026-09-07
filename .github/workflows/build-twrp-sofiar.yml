@@ -145,14 +145,21 @@ jobs:
             echo "bootctrl/Android.mk не намерен на този път!"
           fi
 
-          echo "=== Пълна структура на bootctrl/ папката ==="
-          find ~/twrp/device/motorola/sm6125-common/bootctrl -type f
-          echo ""
-          echo "=== Всички местa, дефиниращи LOCAL_MODULE := bootctrl.\$(TARGET_BOARD_PLATFORM) или сходно ==="
-          grep -rn "LOCAL_MODULE.*bootctrl" ~/twrp/device/motorola/sm6125-common/ 2>/dev/null || echo "(нищо)"
-          echo ""
-          echo "=== Всички Android.mk файлове в sm6125-common (пълен списък) ==="
-          find ~/twrp/device/motorola/sm6125-common -name "Android.mk"
+          # Открихме, че освен bootctrl/Android.mk (Kati/Make style),
+          # има и ОТДЕЛЕН bootctrl/Android.bp (Soong) в СЪЩАТА папка -
+          # вероятно дефинира модул със същото име "bootctrl.trinket".
+          # Затова премахването на static блока в Android.mk не помогна -
+          # истинският конфликт е Soong срещу Make дефиниция, не двата
+          # блока вътре в Android.mk. Махаме Android.bp, оставяме
+          # работещия Android.mk.
+          BOOTCTRL_BP=~/twrp/device/motorola/sm6125-common/bootctrl/Android.bp
+          if [ -f "$BOOTCTRL_BP" ]; then
+            echo "=== Съдържание на bootctrl/Android.bp преди изтриване ==="
+            cat "$BOOTCTRL_BP"
+            rm -v "$BOOTCTRL_BP"
+          else
+            echo "bootctrl/Android.bp не намерен на този път!"
+          fi
 
       - name: Build recovery image
         run: |
