@@ -67,6 +67,10 @@ jobs:
           repo sync -c -j"$(nproc)" --force-sync --no-clone-bundle --no-tags --optimized-fetch
           df -h
 
+      - name: Patch kernel vmscan compatibility
+        run: |
+          python3 "$GITHUB_WORKSPACE/tools/patch_vmscan.py" ~/twrp/kernel/motorola/trinket/mm/vmscan.c
+
       - name: Copy in device tree
         run: |
           mkdir -p ~/twrp/device/motorola/sofiar
