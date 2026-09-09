@@ -39,17 +39,24 @@ def main():
         r"(?<![\w*])dsi_display\s*=\s*\(struct\s+dsi_display\s*\*\)\s*\(display\)\s*;"
     )
     matches = list(pattern.finditer(text))
-    if len(matches) != 1:
-        print(f"ГРЕШКА: очаквах точно 1 съвпадение на бъгавия ред, "
-              f"намерих {len(matches)}. Спирам без промяна - нужна е "
-              f"ръчна проверка на файла.")
+    if len(matches) == 0:
+        print("ГРЕШКА: не намерих бъгавия ред никъде - спирам без промяна, "
+              "нужна е ръчна проверка на файла.")
         sys.exit(1)
 
-    old = matches[0].group(0)
-    new = "struct dsi_display *" + old
-    text = text[:matches[0].start()] + new + text[matches[0].end():]
+    print(f"Ще поправя {len(matches)} срещане(ия) на бъгавия ред "
+          f"(всяко е в отделна функция, поправката е независима за всяко).")
+
+    # Заменяме отзад напред, за да не се разместват индексите на
+    # по-ранните съвпадения при всяка вложена замяна.
+    for m in reversed(matches):
+        old = m.group(0)
+        new = "struct dsi_display *" + old
+        text = text[:m.start()] + new + text[m.end():]
+        print(f"  Позиция {m.start()}: '{old}' -> '{new}'")
+
     p.write_text(text, encoding="utf-8")
-    print(f"OK: добавен липсващ тип - '{old}' -> '{new}'")
+    print(f"OK: поправени {len(matches)} срещане(ия).")
 
 
 if __name__ == "__main__":
