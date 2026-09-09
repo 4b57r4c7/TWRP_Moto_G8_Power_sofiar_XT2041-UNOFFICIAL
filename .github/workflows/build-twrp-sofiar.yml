@@ -75,6 +75,10 @@ jobs:
         run: |
           python3 "$GITHUB_WORKSPACE/tools/patch_cpufreq_stats.py" ~/twrp/kernel/motorola/trinket/drivers/cpufreq/cpufreq_stats.c
 
+      - name: Patch kernel sde_connector compatibility
+        run: |
+          python3 "$GITHUB_WORKSPACE/tools/patch_sde_connector.py" ~/twrp/kernel/motorola/trinket/drivers/gpu/drm/msm/sde/sde_connector.c
+
       - name: Copy in device tree
         run: |
           mkdir -p ~/twrp/device/motorola/sofiar
