@@ -79,6 +79,18 @@ jobs:
         run: |
           python3 "$GITHUB_WORKSPACE/tools/patch_sde_connector.py" ~/twrp/kernel/motorola/trinket/drivers/gpu/drm/msm/sde/sde_connector.c
 
+      - name: Debug - inspect smb5-reg.h for TYPE_C register conventions
+        run: |
+          REG_H=~/twrp/kernel/motorola/trinket/drivers/power/supply/qcom/smb5-reg.h
+          echo "=== TYPEC_BASE дефиниция ==="
+          grep -n "TYPEC_BASE" "$REG_H" || echo "(не намерен)"
+          echo ""
+          echo "=== Всички TYPE_C / TYPEC регистри в smb5-reg.h ==="
+          grep -n "TYPE_C\|TYPEC" "$REG_H" || echo "(нищо намерено)"
+          echo ""
+          echo "=== Контекст около DEBUG_ACCESS (ако съществува частично) ==="
+          grep -n -B2 -A2 "DEBUG_ACCESS" "$REG_H" || echo "(нищо намерено)"
+
       - name: Copy in device tree
         run: |
           mkdir -p ~/twrp/device/motorola/sofiar
