@@ -83,21 +83,9 @@ jobs:
         run: |
           python3 "$GITHUB_WORKSPACE/tools/patch_smb5_reg.py" ~/twrp/kernel/motorola/trinket/drivers/power/supply/qcom/smb5-reg.h
 
-      - name: Debug - dump wait_for_transfers_inflight function
+      - name: Patch kernel msm_geni_serial compatibility
         run: |
-          FILE=~/twrp/kernel/motorola/trinket/drivers/tty/serial/msm_geni_serial.c
-          {
-            echo "=== msm_geni_serial.c, редове 280-350 (функцията + контекст) ==="
-            sed -n '280,350p' "$FILE" | cat -n
-          } | tee "$GITHUB_WORKSPACE/diagnostics.log"
-
-      - name: Upload diagnostics log
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: diagnostics-log
-          path: diagnostics.log
-          if-no-files-found: ignore
+          python3 "$GITHUB_WORKSPACE/tools/patch_msm_geni_serial.py" ~/twrp/kernel/motorola/trinket/drivers/tty/serial/msm_geni_serial.c
 
       - name: Copy in device tree
         run: |
