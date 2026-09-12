@@ -87,6 +87,22 @@ jobs:
         run: |
           python3 "$GITHUB_WORKSPACE/tools/patch_msm_geni_serial.py" ~/twrp/kernel/motorola/trinket/drivers/tty/serial/msm_geni_serial.c
 
+      - name: Debug - dump qcom dts Makefile entries for crashing boards
+        run: |
+          MK=~/twrp/kernel/motorola/trinket/arch/arm64/boot/dts/qcom/Makefile
+          {
+            echo "=== Пълно съдържание на arch/arm64/boot/dts/qcom/Makefile ==="
+            cat -n "$MK"
+          } | tee "$GITHUB_WORKSPACE/diagnostics.log"
+
+      - name: Upload diagnostics log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: diagnostics-log
+          path: diagnostics.log
+          if-no-files-found: ignore
+
       - name: Copy in device tree
         run: |
           mkdir -p ~/twrp/device/motorola/sofiar
