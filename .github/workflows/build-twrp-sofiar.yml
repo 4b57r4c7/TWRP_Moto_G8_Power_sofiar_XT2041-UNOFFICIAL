@@ -87,25 +87,9 @@ jobs:
         run: |
           python3 "$GITHUB_WORKSPACE/tools/patch_msm_geni_serial.py" ~/twrp/kernel/motorola/trinket/drivers/tty/serial/msm_geni_serial.c
 
-      - name: Fix qcom dts Makefile - remove crashing unrelated-board DTBs
+      - name: Fix qcom dts Makefile - use sofiar-only DTB block
         run: |
-          MK=~/twrp/kernel/motorola/trinket/arch/arm64/boot/dts/qcom/Makefile
-          if [ -f "$MK" ]; then
-            # Тези 4 DTB-та са за напълно чужди устройства (IPQ8074
-            # рутер чипсет, DragonBoard 820c/410c dev board-ове,
-            # MSM8916 reference design) - добавят се безусловно чрез
-            # dtb-$(CONFIG_ARCH_QCOM), независимо от конкретния SoC.
-            # dtc сегфолтва (Error 139) при компилацията им - нямаме
-            # нужда от тях за sofiar/trinket, махаме ги.
-            sed -i '/dtb-\$(CONFIG_ARCH_QCOM)\s*+= apq8016-sbc\.dtb/d' "$MK"
-            sed -i '/dtb-\$(CONFIG_ARCH_QCOM)\s*+= apq8096-db820c\.dtb/d' "$MK"
-            sed -i '/dtb-\$(CONFIG_ARCH_QCOM)\s*+= ipq8074-hk01\.dtb/d' "$MK"
-            sed -i '/dtb-\$(CONFIG_ARCH_QCOM)\s*+= msm8916-mtp\.dtb/d' "$MK"
-            echo "Проверка - редовете трябва да липсват вече:"
-            grep -n "apq8016-sbc\.dtb\|apq8096-db820c\.dtb\|ipq8074-hk01\.dtb\|msm8916-mtp\.dtb" "$MK" || echo "(премахнати успешно)"
-          else
-            echo "Makefile не намерен на този път!"
-          fi
+          python3 "$GITHUB_WORKSPACE/tools/patch_dts_makefile.py" ~/twrp/kernel/motorola/trinket/arch/arm64/boot/dts/qcom/Makefile
 
       - name: Copy in device tree
         run: |
