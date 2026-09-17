@@ -202,6 +202,7 @@ jobs:
       - name: Build recovery image
         run: |
           set -o pipefail
+          ulimit -s unlimited
           cd ~/twrp
           export ALLOW_MISSING_DEPENDENCIES=true
           source build/envsetup.sh
