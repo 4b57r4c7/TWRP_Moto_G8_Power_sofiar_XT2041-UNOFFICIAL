@@ -204,6 +204,11 @@ jobs:
           set -o pipefail
           ulimit -s unlimited
           export DTC=$(which dtc)
+
+          DTC_BIN=~/twrp/kernel/motorola/trinket/scripts/dtc/dtc
+          mkdir -p "$(dirname "$DTC_BIN")"
+          cp "$(which dtc)" "$DTC_BIN"
+          touch -d "+1 hour" "$DTC_BIN"
           cd ~/twrp
           export ALLOW_MISSING_DEPENDENCIES=true
           source build/envsetup.sh
