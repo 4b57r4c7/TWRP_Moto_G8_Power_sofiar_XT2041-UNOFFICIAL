@@ -34,7 +34,7 @@ jobs:
             zlib1g-dev libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev \
             libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc \
             unzip fontconfig python3 python-is-python3 bc rsync bc \
-            liblz4-tool libssl-dev
+            liblz4-tool libssl-dev device-tree-compiler
 
       - name: Install repo tool
         run: |
@@ -203,6 +203,7 @@ jobs:
         run: |
           set -o pipefail
           ulimit -s unlimited
+          export DTC=$(which dtc)
           cd ~/twrp
           export ALLOW_MISSING_DEPENDENCIES=true
           source build/envsetup.sh
