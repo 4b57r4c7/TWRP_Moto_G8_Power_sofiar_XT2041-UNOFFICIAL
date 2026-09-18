@@ -205,10 +205,11 @@ jobs:
           ulimit -s unlimited
           export DTC=$(which dtc)
 
-          DTC_BIN=~/twrp/kernel/motorola/trinket/scripts/dtc/dtc
-          mkdir -p "$(dirname "$DTC_BIN")"
-          cp "$(which dtc)" "$DTC_BIN"
-          touch -d "+1 hour" "$DTC_BIN"
+          DTC_MK2=~/twrp/kernel/motorola/trinket/scripts/Makefile.lib
+          if [ -f "$DTC_MK2" ]; then
+            sed -i 's|^DTC\s*:=.*|DTC := /usr/bin/dtc|' "$DTC_MK2"
+            grep -n "^DTC" "$DTC_MK2"
+          fi
           cd ~/twrp
           export ALLOW_MISSING_DEPENDENCIES=true
           source build/envsetup.sh
