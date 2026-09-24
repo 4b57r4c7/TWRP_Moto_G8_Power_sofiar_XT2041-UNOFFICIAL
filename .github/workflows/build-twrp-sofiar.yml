@@ -91,20 +91,6 @@ jobs:
         run: |
           python3 "$GITHUB_WORKSPACE/tools/patch_dts_makefile.py" ~/twrp/kernel/motorola/trinket/arch/arm64/boot/dts/qcom/Makefile
 
-      - name: Debug - manually run dtc on trinket-sofiar-base.dts
-        continue-on-error: true
-        run: |
-          sudo apt-get install -y gdb >/dev/null
-          K=~/twrp/kernel/motorola/trinket
-          cd $K/arch/arm64/boot/dts/qcom
-          gcc -E -nostdinc -undef -D__DTS__ -x assembler-with-cpp \
-            -I .. -I $K/include -I $K/scripts/dtc/include-prefixes \
-            trinket-sofiar-base.dts -o /tmp/pre.dts 2>&1 | tail -20 || true
-          echo "=== preprocessed lines: $(wc -l < /tmp/pre.dts)"
-          ulimit -s unlimited
-          dtc -I dts -O dtb -o /tmp/out.dtb /tmp/pre.dts 2>&1 | tail -20 || true
-          echo "=== GDB backtrace ==="
-          gdb -batch -ex run -ex bt --args dtc -I dts -O dtb -o /tmp/out.dtb /tmp/pre.dts 2>&1 | tail -30 || true
 
       - name: Copy in device tree
         run: |
@@ -220,11 +206,11 @@ jobs:
           ulimit -s unlimited
           export DTC=$(which dtc)
 
-          DTC_MK2=~/twrp/kernel/motorola/trinket/scripts/Makefile.lib
-          if [ -f "$DTC_MK2" ]; then
-            sed -i 's|^DTC\s*:=.*|DTC := /usr/bin/dtc|' "$DTC_MK2"
-            grep -n "^DTC" "$DTC_MK2"
-          fi
+          K=~/twrp/kernel/motorola/trinket
+          for F in "$K/scripts/Makefile.lib" "$K/Makefile"; do
+            sed -i -E 's|^DTC[[:space:]]*[?:]?=.*|DTC := /usr/bin/dtc|' "$F"
+            grep -nE '^DTC[[:space:]]*[?:]?=' "$F" || true
+          done
           cd ~/twrp
           export ALLOW_MISSING_DEPENDENCIES=true
           source build/envsetup.sh
