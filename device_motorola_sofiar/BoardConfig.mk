@@ -73,6 +73,14 @@ BOARD_SOFIAR_DYNAMIC_PARTITIONS_PARTITION_LIST := system vendor product
 # Ще коригираме, ако build-ът се оплаче за размер при първия опит.
 BOARD_SOFIAR_DYNAMIC_PARTITIONS_SIZE := 8656846848
 
+# vendor/product са отделни логически дялове в super - иначе build-ът
+# прави root/vendor и root/product symlink-ове към /system/..., които
+# се сблъскват с файловете от common.mk (rsync "could not make way for new symlink")
+BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
+TARGET_COPY_OUT_VENDOR := vendor
+TARGET_COPY_OUT_PRODUCT := product
+
 # --- Dynamic partitions / filesystem ---
 BOARD_USES_METADATA_PARTITION := true
 TARGET_USERIMAGES_USE_EXT4 := true
