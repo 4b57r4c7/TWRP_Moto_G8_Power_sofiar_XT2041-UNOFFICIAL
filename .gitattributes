@@ -8,3 +8,5 @@
 *.mk text eol=lf
 *.py text eol=lf
 *.rc text eol=lf
+
+device_motorola_sofiar/prebuilt/** binary

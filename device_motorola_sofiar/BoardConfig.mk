@@ -22,21 +22,24 @@ TARGET_2ND_CPU_ABI := armeabi-v7a
 TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := kryo
 
-# --- Kernel source (community-derived, виж reference/device-findings.md) ---
-TARGET_KERNEL_SOURCE := kernel/motorola/trinket
-# TODO: няма отделен "sofiar_defconfig" в kernel source-а - структурата
-# е база defconfig (trinket-perf_defconfig) + отделен device fragment
-# (arch/arm64/configs/vendor/ext_config/moto-trinket-sofiar.config).
-# Тръгваме с base defconfig-а (perf вариант - вероятно production/
-# shipped конфигурация); ако нещо специфично за sofiar (сензори,
-# дисплей, тъч) не работи по-късно, ще трябва да интегрираме и
-# fragment-а отделно.
-TARGET_KERNEL_CONFIG := vendor/trinket-perf_defconfig
+# --- Kernel: PREBUILT от stock recovery.img (RPES31.Q4U-47-35-12) ---
+# Компилираният от source kernel (trinket-perf_defconfig) НЕ включва
+# sofiar-специфичните драйвери (напр. CONFIG_BACKLIGHT_AW99703 от
+# ext_config/moto-trinket-sofiar.config) - вероятен черен екран. Stock
+# kernel-ът е точно този, който телефонът реално bootва, и съвпада по
+# версия с vendor модулите (тъч драйверите) на телефона.
+# Файловете се извличат с tools/extract_prebuilts.py.
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
-# header_version 2 -> dtb е ОТДЕЛНА секция (не appended към kernel),
-# затова Image.gz, не Image.gz-dtb
-BOARD_KERNEL_IMAGE_NAME := Image.gz
+TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
+BOARD_INCLUDE_DTB_IN_BOOTIMG := true
+BOARD_PREBUILT_DTBIMAGE_DIR := $(DEVICE_PATH)/prebuilt/dtb
+BOARD_PREBUILT_RECOVERY_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/recovery_dtbo
+
+# Stock cmdline (РЕАЛНИ ДАННИ от recovery.img header, без buildvariant=user,
+# което build-ът добавя сам) + selinux permissive само за TWRP
+BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200,n8 androidboot.hardware=qcom androidboot.console=ttyMSM0 androidboot.memcg=1 lpm_levels.sleep_disabled=1 video=vfb:640x400,bpp=32,memsize=3072000 msm_rtb.filter=0x237 service_locator.enable=1 swiotlb=1 earlycon=msm_geni_serial,0x4a90000 loop.max_part=7 cgroup.memory=nokmem,nosocket androidboot.usbcontroller=4e00000.dwc3 printk.devkmsg=on androidboot.hab.csv=19 androidboot.hab.product=sofiar androidboot.hab.cid=50 firmware_class.path=/vendor/firmware_mnt/image
+BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 
 # --- Boot image header - РЕАЛНИ ДАННИ от recovery.img (header_version 2) ---
 BOARD_BOOTIMG_HEADER_VERSION := 2
@@ -54,12 +57,6 @@ BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --dtb_offset $(BOARD_DTB_OFFSET)
 BOARD_INCLUDE_RECOVERY_DTBO := true
-# BOARD_CUSTOM_BOOTIMG_MK махнат - нашият bootimg.mk е празен, което
-# караше ninja да няма никакво правило за recovery.img ("missing and
-# no known rule to make it"). Стандартното AOSP правило използва вече
-# конфигурираните BOARD_MKBOOTIMG_ARGS директно, без нужда от custom
-# makefile. Ако не поеме dtb-то коректно, следваща грешка ще покаже
-# какво точно липсва.
 
 # --- Партиции - РЕАЛНИ ДАННИ от GPT (виж reference/device-findings.md) ---
 BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864        # boot_a/b = 64MB

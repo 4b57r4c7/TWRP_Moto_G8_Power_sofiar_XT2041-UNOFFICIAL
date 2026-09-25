@@ -16,9 +16,4 @@
        workflow-ът го копира директно в device/motorola/sofiar/
        (виж стъпка "Copy in device tree" в build-twrp-sofiar.yml) -->
 
-  <!-- Kernel source за trinket платформата (community-derived, 4.14) -->
-  <project name="codyf86/android_kernel_motorola_trinket"
-           path="kernel/motorola/trinket"
-           remote="github"
-           revision="kernel.lnx.4.14.r11-rel" />
 </manifest>
