@@ -7,9 +7,11 @@
 #  който извадихме - там е <src> <mnt> <type> <mnt_flags> <fs_mgr_flags>)
 
 # --- Основни filesystem дялове (данни от реалния stock fstab) ---
-/system         ext4    /dev/block/bootdevice/by-name/system                     flags=slotselect;logical;display="System"
+/system         ext4    system                                                   flags=slotselect;logical;display="System"
 /metadata       ext4    /dev/block/bootdevice/by-name/metadata                   flags=display="Metadata"
-/data           f2fs    /dev/block/bootdevice/by-name/userdata                   flags=fileencryption=ice:aes-256-cts;forceencrypt;display="Data"
+# /data е ВРЕМЕННО ИЗКЛЮЧЕН (криптиран FBE) - без декриптиране TWRP не бива
+# да го mount-ва/пише по него. Връща се, когато оправим декриптирането.
+#/data          f2fs    /dev/block/bootdevice/by-name/userdata                   flags=fileencryption=ice:aes-256-cts;display="Data"
 /sdcard         vfat    /dev/block/mmcblk1p1                                     flags=display="MicroSD";storage;wipeingui;removable
 
 # --- Raw/flashable дялове (emmc тип = не се mount-ват, само flash/backup) ---
@@ -20,7 +22,8 @@
 # --- Допълнителни дялове, потвърдени от реалната GPT (не бяха в
 #     минималния stock recovery.fstab, но са нужни за пълен TWRP
 #     backup/restore функционал) - ТРЯБВА ДА СЕ ПРОВЕРЯТ при теста ---
-/vendor         ext4    /dev/block/bootdevice/by-name/vendor                     flags=slotselect;logical;display="Vendor"
+/vendor         ext4    vendor                                                   flags=slotselect;logical;display="Vendor"
+/product        ext4    product                                                  flags=slotselect;logical;display="Product"
 /dtbo           emmc    /dev/block/bootdevice/by-name/dtbo                       flags=slotselect;display="DTBO"
 /vbmeta         emmc    /dev/block/bootdevice/by-name/vbmeta                     flags=slotselect;display="vbmeta";backup=1;flashonboot=1
 /persist        ext4    /dev/block/bootdevice/by-name/persist                    flags=display="Persist";backup=1

@@ -105,12 +105,13 @@ AB_OTA_PARTITIONS += \
 
 # --- fstab / crypto ---
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery.fstab
-TW_INCLUDE_CRYPTO := true
-TW_INCLUDE_FBE := true
-# ICE (Inline Crypto Engine) - потвърдено от реалния stock fstab
-# (fileencryption=ice:aes-256-cts). ИЗВЕСТЕН РИСК - виж
-# reference/device-findings.md, не е гарантирано да проработи веднага.
-TARGET_USES_QCOM_ICE_FBE := true
+# КРИПТИРАНЕТО Е ВРЕМЕННО ИЗКЛЮЧЕНО. Първият fastboot boot тест показа
+# (last_kmsg), че TWRP виси преди UI-а в опит да декриптира /data:
+# чака keymaster HAL, който не тръгва в recovery. Първо искаме работещ
+# екран/тъч/adb, декриптирането идва отделно след това.
+# TW_INCLUDE_CRYPTO := true
+# TW_INCLUDE_FBE := true
+# TARGET_USES_QCOM_ICE_FBE := true
 
 # РЕАЛНИ ДАННИ от prop.default (ro.build.version.security_patch / .release)
 PLATFORM_SECURITY_PATCH := 2022-02-01
@@ -118,6 +119,22 @@ PLATFORM_VERSION := 11
 
 # --- TWRP дисплей - потвърдена резолюция 1080x2300, 399ppi (Motorola official) ---
 TW_THEME := portrait_hdpi
+
+# Дисплей/вход/USB - взети от sm6125-common/BoardConfigCommon.mk (същата
+# trinket Moto платформа). Нашият -include на common по-долу сочи към
+# несъществуващ BoardConfig.mk, затова ги слагаме тук изрично.
+TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
+TW_SCREEN_BLANK_ON_BOOT := true
+TW_INPUT_BLACKLIST := "hbtp_vm"
+TARGET_RECOVERY_QCOM_RTC_FIX := true
+# Ползва Moto-специфичния init.recovery.usb.rc от common tree-то вместо
+# стандартния TWRP (иначе rsync-ът го презаписва с TWRP default-а)
+TW_EXCLUDE_DEFAULT_USB_INIT := true
+TW_EXCLUDE_TWRPAPP := true
+TW_USE_TOOLBOX := true
+# logcat в recovery - за диагностика, докато довършваме
+TWRP_INCLUDE_LOGCAT := true
+TARGET_USES_LOGD := true
 
 # --- Общ (common) tree за sm6125/trinket платформата ---
 # common.mk копира десетки ELF binary/.so файлове през PRODUCT_COPY_FILES
