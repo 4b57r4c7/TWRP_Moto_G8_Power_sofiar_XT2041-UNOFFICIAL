@@ -1,10 +1,16 @@
 #!/usr/bin/env python3
 """
-Извлича kernel + dtb + recovery_dtbo от STOCK recovery.img (header v2)
-директно в device tree-то като prebuilt файлове за TWRP build-а.
+Извлича kernel + dtb (+ recovery_dtbo, ако го има) от STOCK boot.img или
+recovery.img (header v2) директно в device tree-то като prebuilt файлове.
+
+ВАЖНО: kernel-ът трябва да е от boot.img - vendor модулите (тъч драйвера)
+са подписани с ключа на boot kernel-а; recovery.img kernel-ът е отделен
+build с друг ключ ("PKCS#7 signature not signed with a trusted key").
+boot.img няма recovery_dtbo - тогава съществуващият prebuilt/recovery_dtbo
+се оставя непроменен.
 
 Употреба (от root-а на repo-то):
-  python tools\\extract_prebuilts.py <път\\до\\stock\\recovery.img> device_motorola_sofiar
+  python tools\\extract_prebuilts.py <път\\до\\stock\\boot.img> device_motorola_sofiar
 
 Създава:
   <device>/prebuilt/kernel
@@ -69,7 +75,7 @@ def main(img_path, dev_dir):
         die("Файлът е по-къс от очакваното (отрязан?).")
     if not dtb.startswith(FDT_MAGIC):
         die("dtb не започва с FDT magic (d00dfeed).")
-    if not dtbo.startswith(DTBO_MAGIC):
+    if dtbo_size and not dtbo.startswith(DTBO_MAGIC):
         die("recovery_dtbo не започва с DT table magic (d7b7ab1e).")
 
     pre = os.path.join(dev_dir, "prebuilt")
@@ -77,8 +83,11 @@ def main(img_path, dev_dir):
     out = {
         os.path.join(pre, "kernel"): kernel,
         os.path.join(pre, "dtb", "sofiar.dtb"): dtb,
-        os.path.join(pre, "recovery_dtbo"): dtbo,
     }
+    if dtbo_size:
+        out[os.path.join(pre, "recovery_dtbo")] = dtbo
+    else:
+        print("(няма recovery_dtbo в този image - оставям съществуващия prebuilt/recovery_dtbo)")
     for path, blob in out.items():
         with open(path, "wb") as f:
             f.write(blob)

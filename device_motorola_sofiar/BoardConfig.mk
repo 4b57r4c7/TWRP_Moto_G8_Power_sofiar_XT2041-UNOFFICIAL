@@ -22,7 +22,9 @@ TARGET_2ND_CPU_ABI := armeabi-v7a
 TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := kryo
 
-# --- Kernel: PREBUILT от stock recovery.img (RPES31.Q4U-47-35-12) ---
+# --- Kernel: PREBUILT от stock boot.img (RPES31.Q4U-47-35-12) ---
+# boot.img, НЕ recovery.img: vendor модулите са подписани с ключа на boot
+# kernel-а, recovery kernel-ът е отделен build и ги отхвърля.
 # Компилираният от source kernel (trinket-perf_defconfig) НЕ включва
 # sofiar-специфичните драйвери (напр. CONFIG_BACKLIGHT_AW99703 от
 # ext_config/moto-trinket-sofiar.config) - вероятен черен екран. Stock
@@ -133,6 +135,11 @@ TARGET_RECOVERY_QCOM_RTC_FIX := true
 # Ползва Moto-специфичния init.recovery.usb.rc от common tree-то вместо
 # стандартния TWRP (иначе rsync-ът го презаписва с TWRP default-а)
 TW_EXCLUDE_DEFAULT_USB_INIT := true
+# MTP временно изключен: TWRP сменя sys.usb.config на "mtp,adb", за което
+# Moto init.recovery.usb.rc няма configfs правило -> adbd спира и USB не се
+# свързва (видяно в диагностиката: adbd stopped, ffs.ready=0, UDC празен).
+# Без MTP остава "adb" и adb работи. MTP ще добавим по-късно.
+TW_EXCLUDE_MTP := true
 TW_EXCLUDE_TWRPAPP := true
 TW_USE_TOOLBOX := true
 # logcat в recovery - за диагностика, докато довършваме

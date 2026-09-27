@@ -60,7 +60,7 @@ fi
     echo "=== modules"
     cut -d' ' -f1 /proc/modules
     echo "=== dmesg"
-    dmesg | grep -iE "fts|focal|nvt|nova|touch|firmware|dwc3|udc|gadget|ffs|avc:" | tail -n 80
+    dmesg | grep -iE "fts|focal|nvt|nova|touch|firmware|dwc3|udc|gadget|ffs|module|sig" | tail -n 80
     echo "=== recovery.log"
     grep -iE "error|fail|unable|firmware|usb" /tmp/recovery.log | tail -n 60
     echo "=== END"
