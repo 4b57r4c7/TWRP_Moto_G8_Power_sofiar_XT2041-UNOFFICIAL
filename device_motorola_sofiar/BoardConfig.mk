@@ -37,8 +37,11 @@ BOARD_PREBUILT_DTBIMAGE_DIR := $(DEVICE_PATH)/prebuilt/dtb
 BOARD_PREBUILT_RECOVERY_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/recovery_dtbo
 
 # Stock cmdline (РЕАЛНИ ДАННИ от recovery.img header, без buildvariant=user,
-# което build-ът добавя сам) + selinux permissive само за TWRP
-BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200,n8 androidboot.hardware=qcom androidboot.console=ttyMSM0 androidboot.memcg=1 lpm_levels.sleep_disabled=1 video=vfb:640x400,bpp=32,memsize=3072000 msm_rtb.filter=0x237 service_locator.enable=1 swiotlb=1 earlycon=msm_geni_serial,0x4a90000 loop.max_part=7 cgroup.memory=nokmem,nosocket androidboot.usbcontroller=4e00000.dwc3 printk.devkmsg=on androidboot.hab.csv=19 androidboot.hab.product=sofiar androidboot.hab.cid=50 firmware_class.path=/vendor/firmware_mnt/image
+# което build-ът добавя сам) + selinux permissive само за TWRP.
+# Махнати androidboot.hab.csv/cid (TWRP не ги ползва), за да остане под
+# 511 символа - иначе mkbootimg пренася края в extra_cmdline, който
+# bootloader-ът може да игнорира (permissive се губеше).
+BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200,n8 androidboot.hardware=qcom androidboot.console=ttyMSM0 androidboot.memcg=1 lpm_levels.sleep_disabled=1 video=vfb:640x400,bpp=32,memsize=3072000 msm_rtb.filter=0x237 service_locator.enable=1 swiotlb=1 earlycon=msm_geni_serial,0x4a90000 loop.max_part=7 cgroup.memory=nokmem,nosocket androidboot.usbcontroller=4e00000.dwc3 printk.devkmsg=on androidboot.hab.product=sofiar firmware_class.path=/vendor/firmware_mnt/image
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 
 # --- Boot image header - РЕАЛНИ ДАННИ от recovery.img (header_version 2) ---
@@ -135,6 +138,12 @@ TW_USE_TOOLBOX := true
 # logcat в recovery - за диагностика, докато довършваме
 TWRP_INCLUDE_LOGCAT := true
 TARGET_USES_LOGD := true
+
+# Тъч драйверите (focaltech_0flash_mmi / nova_0flash_mmi) са vendor модули и
+# искат фърмуер от /vendor/firmware - зареждат се от
+# recovery/root/system/bin/postrecoveryboot.sh СЛЕД като фърмуерът е копиран
+# в RAM. НЕ ползваме TW_LOAD_VENDOR_MODULES: той ги зарежда без фърмуер и
+# драйверът не опитва повторно.
 
 # --- Общ (common) tree за sm6125/trinket платформата ---
 # common.mk копира десетки ELF binary/.so файлове през PRODUCT_COPY_FILES

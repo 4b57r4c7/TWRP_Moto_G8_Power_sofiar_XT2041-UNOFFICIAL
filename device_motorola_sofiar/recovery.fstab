@@ -7,7 +7,9 @@
 #  който извадихме - там е <src> <mnt> <type> <mnt_flags> <fs_mgr_flags>)
 
 # --- Основни filesystem дялове (данни от реалния stock fstab) ---
-/system         ext4    system                                                   flags=slotselect;logical;display="System"
+# system/vendor/product: fsflags=ro - TWRP ги mount-ва САМО read-only, за да
+# не се промени нищо в тях (dm-verity на stock Android)
+/system         ext4    system                                                   flags=slotselect;logical;display="System";fsflags=ro
 /metadata       ext4    /dev/block/bootdevice/by-name/metadata                   flags=display="Metadata"
 # /data е ВРЕМЕННО ИЗКЛЮЧЕН (криптиран FBE) - без декриптиране TWRP не бива
 # да го mount-ва/пише по него. Връща се, когато оправим декриптирането.
@@ -22,8 +24,8 @@
 # --- Допълнителни дялове, потвърдени от реалната GPT (не бяха в
 #     минималния stock recovery.fstab, но са нужни за пълен TWRP
 #     backup/restore функционал) - ТРЯБВА ДА СЕ ПРОВЕРЯТ при теста ---
-/vendor         ext4    vendor                                                   flags=slotselect;logical;display="Vendor"
-/product        ext4    product                                                  flags=slotselect;logical;display="Product"
+/vendor         ext4    vendor                                                   flags=slotselect;logical;display="Vendor";fsflags=ro
+/product        ext4    product                                                  flags=slotselect;logical;display="Product";fsflags=ro
 /dtbo           emmc    /dev/block/bootdevice/by-name/dtbo                       flags=slotselect;display="DTBO"
 /vbmeta         emmc    /dev/block/bootdevice/by-name/vbmeta                     flags=slotselect;display="vbmeta";backup=1;flashonboot=1
 /persist        ext4    /dev/block/bootdevice/by-name/persist                    flags=display="Persist";backup=1
