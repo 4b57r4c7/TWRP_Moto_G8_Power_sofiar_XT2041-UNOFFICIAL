@@ -45,6 +45,8 @@ fi
 (
   sleep 30
   {
+    echo "=== kernel: $(cat /proc/version)"
+    dmesg | grep -i "x.509"
     echo "=== props"
     getprop | grep -E "usb|adb|debuggable|selinux|ro.hardware|twrp|slot_suffix"
     echo "=== udc: $(ls /sys/class/udc 2>&1) / UDC=$(cat /config/usb_gadget/g1/UDC 2>&1)"
