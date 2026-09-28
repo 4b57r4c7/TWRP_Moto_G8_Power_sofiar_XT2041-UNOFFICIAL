@@ -135,11 +135,8 @@ TARGET_RECOVERY_QCOM_RTC_FIX := true
 # Ползва Moto-специфичния init.recovery.usb.rc от common tree-то вместо
 # стандартния TWRP (иначе rsync-ът го презаписва с TWRP default-а)
 TW_EXCLUDE_DEFAULT_USB_INIT := true
-# MTP временно изключен: TWRP сменя sys.usb.config на "mtp,adb", за което
-# Moto init.recovery.usb.rc няма configfs правило -> adbd спира и USB не се
-# свързва (видяно в диагностиката: adbd stopped, ffs.ready=0, UDC празен).
-# Без MTP остава "adb" и adb работи. MTP ще добавим по-късно.
-TW_EXCLUDE_MTP := true
+# MTP: правилата за "mtp,adb" (mtp.gs0 + ffs.adb) са в
+# recovery/root/init.recovery.usb.rc
 TW_EXCLUDE_TWRPAPP := true
 TW_USE_TOOLBOX := true
 # logcat в recovery - за диагностика, докато довършваме
