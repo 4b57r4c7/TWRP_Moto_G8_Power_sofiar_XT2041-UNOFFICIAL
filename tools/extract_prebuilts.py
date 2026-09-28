@@ -17,6 +17,7 @@ boot.img няма recovery_dtbo - тогава съществуващият preb
   <device>/prebuilt/dtb/sofiar.dtb
   <device>/prebuilt/recovery_dtbo
 """
+import gzip
 import hashlib
 import os
 import struct
@@ -77,6 +78,17 @@ def main(img_path, dev_dir):
         die("dtb не започва с FDT magic (d00dfeed).")
     if dtbo_size and not dtbo.startswith(DTBO_MAGIC):
         die("recovery_dtbo не започва с DT table magic (d7b7ab1e).")
+
+    # Показва версията на kernel-а - за да се види, че е точно този от boot.img
+    # (трябва да съвпада с /proc/version в Android на телефона)
+    if kernel[:2] == b"\x1f\x8b":
+        try:
+            raw = gzip.decompress(kernel)
+            i = raw.find(b"Linux version ")
+            if i >= 0:
+                print("Kernel: " + raw[i:raw.find(b"\n", i)].split(b"\0")[0].decode(errors="ignore"))
+        except Exception as ex:
+            print(f"(не успях да прочета версията на kernel-а: {ex})")
 
     pre = os.path.join(dev_dir, "prebuilt")
     os.makedirs(os.path.join(pre, "dtb"), exist_ok=True)
