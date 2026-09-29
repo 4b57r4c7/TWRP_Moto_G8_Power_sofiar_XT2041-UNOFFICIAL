@@ -48,7 +48,7 @@ fi
     echo "=== kernel: $(cat /proc/version)"
     dmesg | grep -i "x.509"
     echo "=== props"
-    getprop | grep -E "usb|adb|debuggable|selinux|ro.hardware|twrp|slot_suffix"
+    getprop | grep -E "usb|adb|debuggable|selinux|ro.hardware|twrp|slot_suffix|crypto|keymaster|listeners|init.svc|security_patch|version.release"
     echo "=== udc: $(ls /sys/class/udc 2>&1) / UDC=$(cat /config/usb_gadget/g1/UDC 2>&1)"
     echo "=== ffs"
     ls -l /dev/usb-ffs/adb 2>&1
@@ -64,7 +64,7 @@ fi
     echo "=== dmesg"
     dmesg | grep -iE "fts|focal|nvt|nova|touch|firmware|dwc3|udc|gadget|ffs|module|sig" | tail -n 80
     echo "=== recovery.log"
-    grep -iE "error|fail|unable|firmware|usb" /tmp/recovery.log | tail -n 60
+    grep -iE "error|fail|unable|firmware|usb|crypt|keymaster|gatekeeper|decrypt|fbe" /tmp/recovery.log | tail -n 100
     echo "=== END"
   } 2>&1 | while IFS= read -r l; do echo "<3>TWDBG: $l" > /dev/kmsg; done
 ) </dev/null >/dev/null 2>&1 &

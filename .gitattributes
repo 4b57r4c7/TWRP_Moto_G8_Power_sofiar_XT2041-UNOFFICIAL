@@ -10,3 +10,7 @@
 *.rc text eol=lf
 
 device_motorola_sofiar/prebuilt/** binary
+
+device_motorola_sofiar/recovery/root/vendor/lib64/** binary
+device_motorola_sofiar/recovery/root/system/bin/qseecomd binary
+device_motorola_sofiar/recovery/root/system/bin/android.hardware.* binary

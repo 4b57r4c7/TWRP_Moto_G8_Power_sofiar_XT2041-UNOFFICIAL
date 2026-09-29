@@ -110,17 +110,27 @@ AB_OTA_PARTITIONS += \
 
 # --- fstab / crypto ---
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery.fstab
-# КРИПТИРАНЕТО Е ВРЕМЕННО ИЗКЛЮЧЕНО. Първият fastboot boot тест показа
-# (last_kmsg), че TWRP виси преди UI-а в опит да декриптира /data:
-# чака keymaster HAL, който не тръгва в recovery. Първо искаме работещ
-# екран/тъч/adb, декриптирането идва отделно след това.
-# TW_INCLUDE_CRYPTO := true
-# TW_INCLUDE_FBE := true
-# TARGET_USES_QCOM_ICE_FBE := true
+# FBE декриптиране (stock fstab: fileencryption=ice:aes-256-cts -> fscrypt v1).
+# qseecomd/keymaster/gatekeeper са взети от vendor-а на ТОЗИ телефон
+# (tools/pull_decrypt_blobs.py) в recovery/root; стартират се от
+# device/qcom/twrp-common (BOARD_USES_QCOM_FBE_DECRYPTION).
+TW_INCLUDE_CRYPTO := true
+TW_INCLUDE_CRYPTO_FBE := true
+TW_USE_FSCRYPT_POLICY := 1
+BOARD_USES_QCOM_FBE_DECRYPTION := true
+# Вътрешната памет (/sdcard) е /data/media/0
+RECOVERY_SDCARD_ON_DATA := true
+# libion е зависимост на qseecomd/keymaster - строим я от AOSP, не от телефона
+TARGET_RECOVERY_DEVICE_MODULES += libion
+TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += $(TARGET_OUT_SHARED_LIBRARIES)/libion.so
 
-# РЕАЛНИ ДАННИ от prop.default (ro.build.version.security_patch / .release)
-PLATFORM_SECURITY_PATCH := 2022-02-01
+# Версии = ТОЧНО като stock на телефона (прочетени от system/vendor build.prop
+# с pull_decrypt_blobs.py). Така keymaster в TrustZone вижда същата версия и
+# patch level като Android и не "ъпгрейдва" ключовете изобщо.
 PLATFORM_VERSION := 11
+PLATFORM_VERSION_LAST_STABLE := $(PLATFORM_VERSION)
+PLATFORM_SECURITY_PATCH := 2022-02-01
+VENDOR_SECURITY_PATCH := 2022-02-01
 
 # --- TWRP дисплей - потвърдена резолюция 1080x2300, 399ppi (Motorola official) ---
 TW_THEME := portrait_hdpi

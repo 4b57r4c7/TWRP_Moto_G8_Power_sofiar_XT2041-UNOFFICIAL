@@ -144,6 +144,12 @@ jobs:
             sed -i '\|libandroidicu\.so:recovery/root/system/lib64/libandroidicu\.so|d' "$COMMON_MK"
             sed -i '\|libicui18n\.so:recovery/root/system/lib64/libicui18n\.so|d' "$COMMON_MK"
             sed -i '\|libicuuc\.so:recovery/root/system/lib64/libicuuc\.so|d' "$COMMON_MK"
+            # rc файловете на common за qseecomd/keymaster/gatekeeper сочат към
+            # /vendor/bin/... (там няма нищо в recovery) и пускат keymaster още
+            # в "on init", преди qseecomd. Услугите вече ги дефинира
+            # device/qcom/twrp-common (BOARD_USES_QCOM_FBE_DECRYPTION) - махаме ги.
+            sed -i '\|recovery/root/vendor/etc/init/|d' "$COMMON_MK"
+            grep -n "vendor/etc/init/" "$COMMON_MK" || echo "(vendor/etc/init rc редовете махнати)"
             echo "Редове за gatekeeper/keymaster/ICU премахнати от common.mk. Проверка:"
             grep -n "gatekeeper@1.0.so:recovery/root/system/lib64\|keymaster@4.0.so:recovery/root/system/lib64\|libandroidicu.so:recovery\|libicui18n.so:recovery\|libicuuc.so:recovery" "$COMMON_MK" || echo "(няма повече такива редове)"
           else
