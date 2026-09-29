@@ -197,6 +197,19 @@ jobs:
           sed -i '/"generated_kernel_headers",/d' "$GPT_BP"
           grep -n "generated_kernel_headers" "$GPT_BP" && { echo "Зависимостта още е там!"; exit 1; } || echo "generated_kernel_headers махнат от gpt-utils"
 
+      - name: Workaround - qcom decrypt library path order
+        run: |
+          # twrp-common пуска qseecomd/keymaster/gatekeeper с
+          # LD_LIBRARY_PATH=/vendor/lib64:/vendor/lib:/system/lib64:...
+          # 64-битовият linker намира 32-битова библиотека в /vendor/lib
+          # (libandroidicu.so) преди /system/lib64 и спира с
+          # "is 32-bit instead of 64-bit". Слагаме /system/lib64 преди /vendor/lib.
+          for RC in ~/twrp/device/qcom/twrp-common/crypto/init.recovery.qcom_decrypt.rc \
+                    ~/twrp/device/qcom/twrp-common/crypto_fbe/init.recovery.qcom_decrypt.fbe.rc; do
+            sed -i 's|/vendor/lib64:/vendor/lib:/system/lib64:/system/lib|/vendor/lib64:/system/lib64:/vendor/lib:/system/lib|g' "$RC"
+            echo "== $RC"; grep -n "LD_LIBRARY_PATH" "$RC"
+          done
+
       - name: Build recovery image
         run: |
           set -o pipefail

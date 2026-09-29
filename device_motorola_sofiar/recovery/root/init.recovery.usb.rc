@@ -34,6 +34,12 @@ on init
     # (не е USB) подробен лог от twrp-common/prepdecrypt в recovery.log
     setprop prepdecrypt.loglevel 2
 
+# (не е USB) Декриптиране: пускаме qseecomd -> keymaster -> gatekeeper още при
+# старта, вместо да чакаме TWRP да зададе ro.crypto.state. Иначе TWRP опитва
+# DE ключовете (след 1 сек. пауза) преди keymaster да е готов и се отказва.
+on property:hwservicemanager.ready=true
+    setprop crypto.ready 1
+
 on property:ro.boot.usbcontroller=*
     setprop sys.usb.controller ${ro.boot.usbcontroller}
     write /sys/class/udc/${ro.boot.usbcontroller}/device/../mode peripheral
