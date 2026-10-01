@@ -217,6 +217,11 @@ jobs:
           python3 "$GITHUB_WORKSPACE/tools/patch_vold_a11_keystore.py" ~/twrp/system/vold/Decrypt.cpp
           grep -n "sofiar" ~/twrp/system/vold/Decrypt.cpp | head -5
 
+      - name: Workaround - release /datakeep before Format/Wipe Data
+        run: |
+          python3 "$GITHUB_WORKSPACE/tools/patch_twrp_datakeep_wipe.py" ~/twrp/bootable/recovery/partition.cpp
+          grep -n "sofiar" ~/twrp/bootable/recovery/partition.cpp
+
       - name: Build recovery image
         run: |
           set -o pipefail

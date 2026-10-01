@@ -142,6 +142,11 @@ TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 TW_SCREEN_BLANK_ON_BOOT := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
 TARGET_RECOVERY_QCOM_RTC_FIX := true
+# Батерия: няма /sys/class/power_supply/battery, а health HAL не тръгва ->
+# четем директно от sysfs (без кавички - TWRP сам го прави на низ)
+TW_CUSTOM_BATTERY_PATH := /sys/class/power_supply/qcom_battery
+# Няма timed_output / leds vibrator -> без вибрация (спира и спама в лога)
+TW_NO_HAPTICS := true
 # Ползва Moto-специфичния init.recovery.usb.rc от common tree-то вместо
 # стандартния TWRP (иначе rsync-ът го презаписва с TWRP default-а)
 TW_EXCLUDE_DEFAULT_USB_INIT := true
