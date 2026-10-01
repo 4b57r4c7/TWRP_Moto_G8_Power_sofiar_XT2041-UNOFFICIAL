@@ -1,783 +1,0 @@
-Starting TWRP 3.7.1_12-0-5c3d206a on Sat Feb  7 20:20:58 1970
- (pid 453)
-I:Lun file '/config/usb_gadget/g1/functions/mass_storage.0/lun.0/file' does not exist, USB storage mode disabled
-PRODUCT_USE_DYNAMIC_PARTITIONS := true
-I:Found brightness file at '/sys/devices/platform/soc/4a84000.i2c/i2c-0/0-0036/backlight/aw99703-bl/brightness'
-I:Got max brightness 2047 from '/sys/devices/platform/soc/4a84000.i2c/i2c-0/0-0036/backlight/aw99703-bl/max_brightness'
-I:TWFunc::Set_Brightness: Setting brightness control to 2047
-I:TW_EXCLUDE_ENCRYPTED_BACKUPS := true
-I:TW_EXCLUDE_MTP := true
-I:LANG: en
-I:AB_OTA_UPDATER := true
-I:Startup Commands: 
-=> Linking mtab
-=> Processing /etc/recovery.fstab
-I:Reading /etc/recovery.fstab
-I:Processing '/system'
-I:Created '/system_root' folder.
-I:Trying to prepare system from super partition
-I:Symlinking /dev/block/dm-0 => /dev/block/bootdevice/by-name/system 
-I:Processing '/metadata'
-I:Processing '/sdcard'
-I:Processing '/boot'
-I:Processing '/recovery'
-I:Processing '/misc'
-I:Processing '/vendor'
-I:Trying to prepare vendor from super partition
-I:Symlinking /dev/block/dm-2 => /dev/block/bootdevice/by-name/vendor 
-I:Processing '/product'
-I:Trying to prepare product from super partition
-I:Symlinking /dev/block/dm-3 => /dev/block/bootdevice/by-name/product 
-I:Processing '/dtbo'
-I:Processing '/vbmeta'
-E:Unhandled flag: 'flashonboot=1'
-I:Processing '/persist'
-I:Created '/persist' folder.
-I:TWFunc::Fixup_Time: Pre-fix date and time: 1970-02-07--20-20-58
-I:TWFunc::Fixup_Time: Setting time offset from file /sys/class/rtc/rtc0/since_epoch
-I:TWFunc::Fixup_Time: will attempt to use the ats files now.
-I:TWFunc::Fixup_Time: Setting time offset from file /persist/time/ats_2, offset 1787355211096
-I:TWFunc::Fixup_Time: Date and time corrected: 2026-09-28--19-54-28
-I:Processing '/super'
-E:Unable to override 'ro.crypto.dm_default_key.options_format.version' due to missing libresetprop
-I:GetFstabPath: /odm/etc/fstab.emmc
-I:GetFstabPath: /vendor/etc/fstab.emmc
-I:GetFstabPath: /system/etc/fstab.emmc
-I:GetFstabPath: /first_stage_ramdisk/system/etc/fstab.emmc
-I:GetFstabPath: /fstab.emmc
-I:GetFstabPath: /first_stage_ramdisk/fstab.emmc
-I:GetFstabPath: /odm/etc/fstab.qcom
-I:GetFstabPath: /vendor/etc/fstab.qcom
-I:Fstab: /vendor/etc/fstab.qcom
-I:Reading /etc/additional.fstab
-I:Processing '/metadata'
-I:Unhandled flag: 'first_stage_mount'
-I:Processing '/data'
-I:Unhandled flag: 'latemount'
-I:FBE contents 'ice', filenames 'aes-256-cts'
-I:Unhandled flag: 'reservedsize=128M'
-I:Unhandled flag: 'checkpoint=fs'
-I:Done processing fstab files
-I:Property ro.boot.product.vendor.sku not found, trying to get vintf manifest file name from ro.board.platform
-I:Separate manifest doesn't exist for 'android.hardware.keymaster'
-I:/vendor/etc/vintf/manifest_trinket.xml not found. Using default path for manifest.xml
-I:PageManager::LoadFileToBuffer loading filename: '/vendor/etc/vintf/manifest.xml' directly
-I:Looking for 'android.hardware.keymaster' service in manifest
-I:Found version in manifest: 4.0
-I:Keymaster_Ver::Using keymaster version '4.x' for decryption
-Starting the UI...
-Skipping adf graphics -- not present in build tree
-width: 1080, height: 2300
-setting DRM_FORMAT_XBGR8888 and GGL_PIXEL_FORMAT_RGBA_8888
-setting DRM_FORMAT_XBGR8888 and GGL_PIXEL_FORMAT_RGBA_8888
-number of lms in topology 1
-Atomic Commit succeedUsing drm graphics.
-I:TWFunc::Set_Brightness: Setting brightness control to 2047
-TW_SCREEN_BLANK_ON_BOOT := true
-I:TWFunc::Set_Brightness: Setting brightness control to 0
-Atomic Commit succeedAtomic Commit succeedI:TWFunc::Set_Brightness: Setting brightness control to 2047
-I:Loading package: splash (/twres/splash.xml)
-I:Load XML directly
-I:PageManager::LoadFileToBuffer loading filename: '/twres/splash.xml' directly
-I:Checking resolution...
-I:Scaling theme width 1.000000x and height 1.197917x, offsets x: 0 y: 0 w: 0 h: 0
-I:Loading resources...
-I:Loading variables...
-I:Loading mouse cursor...
-I:Loading pages...
-I:Loading page splash
-I:Switching packages (splash)
-I:unable to open zip archive /system_root/system/apex/com.android.tzdata.apex. Reason: No such file or directory
-I:Skipping non-existent apex file: /system_root/system/apex/com.android.tzdata.apex
-I:unable to open zip archive /system_root/system/apex/com.android.media.swcodec.apex. Reason: No such file or directory
-I:Skipping non-existent apex file: /system_root/system/apex/com.android.media.swcodec.apex
-I:Created '/and-sec' folder.
-I:Creating Android Secure: /sdcard/.android_secure
-I:cmd: /system/bin/exfat-fuse -o big_writes,max_read=131072,max_write=131072 /dev/block/mmcblk1p1 /sdcard
-matches was 2 on <</dev/block/mmcblk1p1 /and-sec >>
-I:No recovery folder found. Using default folder.
-matches was 2 on <</dev/block/mmcblk1p1 /and-sec >>
-I:Backup folder set to '/sdcard/TWRP/BACKUPS/ZY227BSK6V'
-Updating partition details...
-I:checking for twrp app
-matches was 2 on <</dev/block/mmcblk1p1 /and-sec >>
-matches was 2 on <</dev/block/mmcblk1p1 /and-sec >>
-matches was 2 on <</dev/block/mmcblk1p1 /and-sec >>
-matches was 2 on <</dev/block/mmcblk1p1 /and-sec >>
-...done
-matches was 2 on <</dev/block/mmcblk1p1 /and-sec >>
-/super | /dev/block/by-name/super | Size: 0MB
-   Flags: Can_Be_Backed_Up IsPresent Can_Flash_Img 
-   Alternate_Block_Device: /dev/block/by-name/super
-   Display_Name: super
-   Backup_Path: /super
-   Backup_Name: super
-   Backup_Display_Name: Super (system vendor product)
-   Current_File_System: emmc
-   Backup_Method: dd
-
-I:Unmounting main partitions...
-I:Loading package: TWRP (theme/ui.zip)
-I:Loading zip theme
-I:Loading package: TWRP (/twres/ui.xml)
-I:Load XML directly
-I:PageManager::LoadFileToBuffer loading filename: '/twres/languages/uk.xml' directly
-I:PageManager::LoadFileToBuffer loading filename: '/twres/languages/tr.xml' directly
-I:PageManager::LoadFileToBuffer loading filename: '/twres/languages/sv.xml' directly
-I:PageManager::LoadFileToBuffer loading filename: '/twres/languages/sl.xml' directly
-I:PageManager::LoadFileToBuffer loading filename: '/twres/languages/sk.xml' directly
-I:PageManager::LoadFileToBuffer loading filename: '/twres/languages/ru.xml' directly
-I:PageManager::LoadFileToBuffer loading filename: '/twres/languages/pt_PT.xml' directly
-I:PageManager::LoadFileToBuffer loading filename: '/twres/languages/pt_BR.xml' directly
-I:PageManager::LoadFileToBuffer loading filename: '/twres/languages/pl.xml' directly
-I:PageManager::LoadFileToBuffer loading filename: '/twres/languages/nl.xml' directly
-I:PageManager::LoadFileToBuffer loading filename: '/twres/languages/it.xml' directly
-I:PageManager::LoadFileToBuffer loading filename: '/twres/languages/id.xml' directly
-I:PageManager::LoadFileToBuffer loading filename: '/twres/languages/hu.xml' directly
-I:PageManager::LoadFileToBuffer loading filename: '/twres/languages/fr.xml' directly
-I:PageManager::LoadFileToBuffer loading filename: '/twres/languages/es.xml' directly
-I:PageManager::LoadFileToBuffer loading filename: '/twres/languages/en.xml' directly
-I:PageManager::LoadFileToBuffer loading filename: '/twres/languages/el.xml' directly
-I:PageManager::LoadFileToBuffer loading filename: '/twres/languages/de.xml' directly
-I:PageManager::LoadFileToBuffer loading filename: '/twres/languages/cz.xml' directly
-I:PageManager::LoadFileToBuffer loading filename: '/twres/languages/en.xml' directly
-parsing languageFile
-parsing languageFile done
-I:PageManager::LoadFileToBuffer loading filename: '/twres/ui.xml' directly
-I:Checking resolution...
-I:Scaling theme width 1.000000x and height 1.197917x, offsets x: 0 y: 0 w: 0 h: 0
-I:Loading resources...
-I:Failed to load image from indeterminate013, error -1
-I:Loading variables...
-I:Loading mouse cursor...
-I:Loading pages...
-I:Including file: /twres/portrait.xml...
-I:PageManager::LoadFileToBuffer loading filename: '/twres/portrait.xml' directly
-I:Loading resources...
-I:Loading variables...
-I:Loading mouse cursor...
-I:Loading pages...
-I:Loading page main
-I:Loading page main2
-I:Loading page install
-I:Loading page flash_confirm
-I:Loading page flash_zip
-I:Loading page flash_done
-I:Loading page flash_sleep_and_reboot
-I:Loading page flashimage_confirm
-I:Loading page clear_vars
-I:Loading page reboot_system_routine
-I:Loading page confirm_action
-I:Loading page action_page
-I:Loading page singleaction_page
-I:Loading page action_complete
-I:Loading page filecheck
-I:Loading page rebootcheck
-I:Loading page wipe
-I:Loading page advancedwipe
-I:Loading page formatdata
-I:Loading page formatdata_confirm
-I:Loading page checkpartitionlist
-I:Loading page partitionoptions
-I:Loading page refreshfilesystem
-I:Loading page selectfilesystem
-I:Loading page backup
-I:Loading page multiuser_warning
-I:Loading page backup_options
-I:Loading page backupname1
-I:Loading page backupname2
-I:Loading page backupencryption
-I:Loading page backupencryption2
-I:Loading page checkbackuppassword
-I:Loading page backup_run
-I:Loading page restore
-I:Unable to open '/sdcard/TWRP/BACKUPS/ZY227BSK6V'
-I:Loading page restore_force
-I:Unable to open '/sdcard/TWRP/BACKUPS'
-I:Loading page restore_read
-I:Loading page restore_decrypt
-I:Loading page try_restore_decrypt
-I:Loading page restore_select
-I:Loading page renamebackup
-I:Loading page restore_run
-I:Loading page mount
-I:Loading page usb_mount
-I:Loading page usb_umount
-I:Loading page system_readonly_check
-I:Loading page fastbootreboot
-I:Loading page reboot
-I:Loading page installapp
-I:Loading page system_readonly
-I:Loading page settings
-I:Loading page settings_timezone
-I:Loading page settings_screen
-I:Loading page settings_vibration
-I:Loading page settings_language
-I:Loading page copylog
-I:Loading page advanced
-I:Loading page partsdcardsel
-I:Loading page partsdcardcheck
-I:Loading page partsdcard
-I:Loading page repackselect
-I:Loading page repackconfirm
-I:Loading page lock
-I:Loading page filemanagerlist
-I:Loading page filemanageroptions
-I:Loading page choosedestinationfolder
-I:Loading page filemanagerrenamefile
-I:Loading page filemanagerrenamefolder
-I:Loading page filemanagerchmod
-I:Loading page filemanagerconfirm
-I:Loading page filemanageraction
-I:Loading page decrypt
-I:Loading page decrypt_pattern
-I:Loading page decrypt_pin
-I:Loading page trydecrypt
-I:Loading page canceldecrypt
-I:Loading page terminalcommand
-I:Loading page fastboot
-I:Loading page sideload
-I:Loading page fixcontexts
-I:Loading page slideout
-I:Loading page select_storage
-I:Loading page select_language
-I:Loading page decrypt_users
-I:Loading page changeTwrpFolder
-I:Loading page restore_keymaster
-I:Set page: 'clear_vars'
-I:Set page: 'main2'
-I:Switching packages (TWRP)
-I:failed to read default fstab
-ro.boot.btmacaddr=C8:C7:50:A1:8A:53
-ro.boot.bootreason=reboot
-ro.boot.cid=0x0032
-ro.boot.hab.product=sofiar
-ro.boot.mode=normal
-ro.boot.hwrev=0xC000
-ro.boot.memcg=1
-ro.boot.radio=ROW
-ro.boot.device=sofiar
-ro.boot.vbmeta.size=4096
-ro.boot.vbmeta.digest=3652404a1cf36fd84d9378e14daf25626f4afc0e784af29bd4fa558f00bb2bc0
-ro.boot.vbmeta.hash_alg=sha256
-ro.boot.vbmeta.avb_version=1.0
-ro.boot.vbmeta.device_state=unlocked
-ro.boot.vbmeta.invalidate_on_error=yes
-ro.boot.carrier=reteu
-ro.boot.dtb_idx=0
-ro.boot.dualsim=true
-ro.boot.selinux=permissive
-ro.boot.baseband=msm
-ro.boot.bl_state=2
-ro.boot.dtbo_idx=5
-ro.boot.hardware=qcom
-ro.boot.hardware.sku=XT2041-3
-ro.boot.revision=pvt
-ro.boot.ssm_data=00000000000F3331
-ro.boot.keymaster=1
-ro.boot.bootdevice=4744000.sdhci
-ro.boot.bootloader=MBM-3.0-sofiar_reteu-0f8934adaf-220131
-ro.boot.veritymode=enforcing
-ro.boot.boot_devices=soc/4744000.sdhci
-ro.boot.usbcontroller=4e00000.dwc3
-ro.boot.write_protect=0
-ro.boot.powerup_reason=0x00004000
-ro.boot.secure_hardware=1
-ro.boot.verifiedbootstate=orange
-ro.baseband=msm
-ro.bootmode=normal
-ro.hardware=qcom
-ro.revision=pvt
-ro.bootloader=MBM-3.0-sofiar_reteu-0f8934adaf-220131
-ro.boottime.adbd=2108936354
-ro.boottime.init=1666686154
-ro.boottime.init.selinux=114152719
-ro.boottime.init.first_stage=35545472
-ro.boottime.init.cold_boot_wait=221
-ro.boottime.logd=2087871925
-ro.boottime.ueventd=1857353152
-ro.boottime.recovery=2105068749
-ro.boottime.hwservicemanager=2093434113
-ro.boottime.vndservicemanager=2096365050
-ro.odm.build.date=Mon Sep 28 19:27:25 UTC 2026
-ro.odm.build.date.utc=1790623645
-ro.odm.build.version.incremental=eng.runner.20260928.192904
-ro.odm.build.fingerprint=motorola/twrp_sofiar/sofiar:11/SP2A.220405.004/runner09281927:eng/test-keys
-ro.product.odm.name=twrp_sofiar
-ro.product.odm.brand=motorola
-ro.product.odm.model=moto g(8) power
-ro.product.odm.device=sofiar
-ro.product.odm.manufacturer=motorola
-ro.build.id=SP2A.220405.004
-ro.build.date=Mon Sep 28 19:27:25 UTC 2026
-ro.build.date.utc=1790623645
-ro.build.host=runnervm3p1d5
-ro.build.tags=test-keys
-ro.build.type=eng
-ro.build.user=runner
-ro.build.flavor=twrp_sofiar-eng
-ro.build.display.id=twrp_sofiar-eng 11 SP2A.220405.004 eng.runner.20260928.192904 test-keys
-ro.build.product=sofiar
-ro.build.version.sdk=32
-ro.build.version.base_os=
-ro.build.version.release=12
-ro.build.version.codename=REL
-ro.build.version.incremental=eng.runner.20260928.192904
-ro.build.version.preview_sdk=0
-ro.build.version.all_codenames=REL
-ro.build.version.security_patch=2022-02-01
-ro.build.version.release_or_codename=11
-ro.build.version.preview_sdk_fingerprint=REL
-ro.build.version.min_supported_target_sdk=23
-ro.build.description=twrp_sofiar-eng 11 SP2A.220405.004 eng.runner.20260928.192904 test-keys
-ro.build.characteristics=default
-ro.secure=0
-ro.system.build.id=SP2A.220405.004
-ro.system.build.date=Mon Sep 28 19:27:25 UTC 2026
-ro.system.build.date.utc=1790623645
-ro.system.build.tags=test-keys
-ro.system.build.type=eng
-ro.system.build.version.sdk=32
-ro.system.build.version.release=12
-ro.system.build.version.incremental=eng.runner.20260928.192904
-ro.system.build.version.release_or_codename=11
-ro.system.build.fingerprint=motorola/twrp_sofiar/sofiar:11/SP2A.220405.004/runner09281927:eng/test-keys
-ro.treble.enabled=false
-ro.product.cpu.abi=arm64-v8a
-ro.product.cpu.abilist=arm64-v8a
-ro.product.cpu.abilist32=
-ro.product.cpu.abilist64=arm64-v8a
-ro.product.name=twrp_sofiar
-ro.product.brand=motorola
-ro.product.build.id=SP2A.220405.004
-ro.product.build.date=Mon Sep 28 19:27:25 UTC 2026
-ro.product.build.date.utc=1790623645
-ro.product.build.tags=test-keys
-ro.product.build.type=eng
-ro.product.build.version.sdk=32
-ro.product.build.version.release=12
-ro.product.build.version.incremental=eng.runner.20260928.192904
-ro.product.build.version.release_or_codename=11
-ro.product.build.fingerprint=motorola/twrp_sofiar/sofiar:11/SP2A.220405.004/runner09281927:eng/test-keys
-ro.product.model=moto g(8) power
-ro.product.device=sofiar
-ro.product.system.name=twrp_sofiar
-ro.product.system.brand=motorola
-ro.product.system.model=moto g(8) power
-ro.product.system.device=sofiar
-ro.product.system.manufacturer=motorola
-ro.product.product.name=twrp_sofiar
-ro.product.product.brand=motorola
-ro.product.product.model=moto g(8) power
-ro.product.product.device=sofiar
-ro.product.product.manufacturer=motorola
-ro.product.system_ext.name=twrp_sofiar
-ro.product.system_ext.brand=motorola
-ro.product.system_ext.model=moto g(8) power
-ro.product.system_ext.device=sofiar
-ro.product.system_ext.manufacturer=motorola
-ro.product.manufacturer=motorola
-ro.debuggable=1
-ro.system_ext.build.id=SP2A.220405.004
-ro.system_ext.build.date=Mon Sep 28 19:27:25 UTC 2026
-ro.system_ext.build.date.utc=1790623645
-ro.system_ext.build.tags=test-keys
-ro.system_ext.build.type=eng
-ro.system_ext.build.version.sdk=32
-ro.system_ext.build.version.release=12
-ro.system_ext.build.version.incremental=eng.runner.20260928.192904
-ro.system_ext.build.version.release_or_codename=11
-ro.system_ext.build.fingerprint=motorola/twrp_sofiar/sofiar:11/SP2A.220405.004/runner09281927:eng/test-keys
-ro.actionable_compatible_property.enabled=true
-ro.vendor.build.id=SP2A.220405.004
-ro.vendor.build.date=Mon Sep 28 19:27:25 UTC 2026
-ro.vendor.build.date.utc=1790623645
-ro.vendor.build.tags=test-keys
-ro.vendor.build.type=eng
-ro.vendor.build.version.sdk=32
-ro.vendor.build.version.release=12
-ro.vendor.build.version.incremental=eng.runner.20260928.192904
-ro.vendor.build.version.release_or_codename=11
-ro.vendor.build.fingerprint=motorola/twrp_sofiar/sofiar:11/SP2A.220405.004/runner09281927:eng/test-keys
-ro.vendor.product.cpu.abilist=arm64-v8a
-ro.vendor.product.cpu.abilist32=
-ro.vendor.product.cpu.abilist64=arm64-v8a
-ro.product.board=sofiar
-ro.product.vendor.name=twrp_sofiar
-ro.product.vendor.brand=motorola
-ro.product.vendor.model=moto g(8) power
-ro.product.vendor.device=sofiar
-ro.product.vendor.manufacturer=motorola
-ro.charger.enable_suspend=true
-ro.cold_boot_done=true
-ro.bionic.arch=arm64
-ro.bionic.2nd_arch=arm
-ro.bionic.cpu_variant=kryo
-ro.bionic.2nd_cpu_variant=kryo
-ro.dalvik.vm.native.bridge=0
-ro.zygote=zygote64
-dalvik.vm.isa.arm.variant=kryo
-dalvik.vm.isa.arm.features=default
-dalvik.vm.isa.arm64.variant=kryo
-dalvik.vm.isa.arm64.features=default
-dalvik.vm.dexopt.secondary=true
-dalvik.vm.dexopt.thermal-cutoff=2
-dalvik.vm.usejit=true
-dalvik.vm.madvise.artfile.size=4294967295
-dalvik.vm.madvise.odexfile.size=104857600
-dalvik.vm.madvise.vdexfile.size=104857600
-dalvik.vm.lockprof.threshold=500
-dalvik.vm.dex2oat-Xms=64m
-dalvik.vm.dex2oat-Xmx=512m
-dalvik.vm.minidebuginfo=true
-dalvik.vm.appimageformat=lz4
-dalvik.vm.usejitprofiles=true
-dalvik.vm.image-dex2oat-Xms=64m
-dalvik.vm.image-dex2oat-Xmx=64m
-dalvik.vm.image-dex2oat-filter=extract
-dalvik.vm.dex2oat-minidebuginfo=true
-dalvik.vm.dex2oat-max-image-block-size=524288
-dalvik.vm.dex2oat-resolve-startup-strings=true
-dalvik.vm.dex2oat-updatable-bcp-packages-file=/system/etc/updatable-bcp-packages.txt
-persist.sys.dalvik.vm.lib.2=libart.so
-debug.atrace.tags.enableflags=0
-ro.twrp.boot=1
-ro.twrp.version=3.7.1_12-0
-ro.twrp.fastbootd=0
-ro.wifi.channels=
-ro.allow.mock.location=1
-ro.iorapd.enable=true
-ro.kernel.android.checkjni=1
-ro.kernel.version=4.14
-ro.system.product.cpu.abilist=arm64-v8a
-ro.system.product.cpu.abilist32=
-ro.system.product.cpu.abilist64=arm64-v8a
-ro.postinstall.fstab.prefix=/system
-fbe.contents=ice
-fbe.filenames=aes-256-cts
-twrp.apex.loaded=true
-twrp.super.symlinks_created=true
-twrp.crash_counter=0
-twrp.action_complete=0
-fstab.additional=1
-keymaster_ver=4.x
-ro.boot.slot_suffix=_a
-ro.boot.fstab_suffix=emmc
-ro.boot.dynamic_partitions=true
-ro.hwui.use_vulkan=
-ro.board.platform=trinket
-ro.build.ab_update=true
-ro.hardware.lights=trinket
-ro.hardware.bootctrl=trinket
-ro.hardware.keystore=trinket
-ro.hardware.gatekeeper=trinket
-pm.dexopt.ab-ota=speed-profile
-pm.dexopt.shared=speed
-pm.dexopt.cmdline=verify
-pm.dexopt.install=speed-profile
-pm.dexopt.inactive=verify
-pm.dexopt.bg-dexopt=speed-profile
-pm.dexopt.first-boot=extract
-pm.dexopt.install-bulk=speed-profile
-pm.dexopt.install-fast=skip
-pm.dexopt.install-bulk-secondary=verify
-pm.dexopt.install-bulk-downgraded=verify
-pm.dexopt.install-bulk-secondary-downgraded=extract
-ro.build.fingerprint=motorola/twrp_sofiar/sofiar:11/SP2A.220405.004/eng.runner.20260928.192904:eng/test-keys
-ro.gsid.image_running=0
-gsid.image_installed=0
-hwservicemanager.ready=true
-sys.init.perf_lsm_hooks=1
-init.svc.logd=running
-init.svc.ueventd=running
-init.svc.recovery=running
-init.svc.hwservicemanager=running
-init.svc.vndservicemanager=running
-init.svc.adbd=restarting
-init.svc_debug_pid.adbd=454
-init.svc_debug_pid.logd=450
-init.svc_debug_pid.ueventd=440
-init.svc_debug_pid.recovery=453
-init.svc_debug_pid.hwservicemanager=451
-init.svc_debug_pid.vndservicemanager=452
-ro.logd.kernel=true
-ro.product.ab_ota_partitions=boot,dtbo,odm,product,system,system_ext,vbmeta,vbmeta_system,vendor,boot,dtbo,recovery,system,vbmeta,vendor
-persist.debug.dalvik.vm.core_platform_api_policy=just-warn
-pm.dexopt.post-boot=extract
-pm.dexopt.boot-after-ota=extract
-ro.property_service.version=2
-ro.minui.pixel_format=RGBX_8888
-ro.minui.overscan_percent=0
-ro.boot.serialno=ZY227BSK6V
-ro.serialno=ZY227BSK6V
-service.adb.root=1
-dev.mnt.blk.vendor=
-dev.mnt.blk.system_root=
-net.bt.name=Android
-persist.sys.usb.config=adb
-persist.traced.enable=1
-sys.usb.config=adb
-sys.usb.configfs=1
-sys.usb.controller=4e00000.dwc3
-ro.odm.build.id=SP2A.220405.004
-ro.odm.build.tags=test-keys
-ro.odm.build.type=eng
-ro.odm.build.version.sdk=32
-ro.odm.build.version.release=12
-ro.odm.build.version.release_or_codename=11
-ro.odm.product.cpu.abilist=arm64-v8a
-ro.odm.product.cpu.abilist32=
-ro.odm.product.cpu.abilist64=arm64-v8a
-ro.vendor.build.security_patch=
-ro.crypto.volume.filenames_mode=aes-256-cts
-ro.crypto.allow_encrypt_override=true
-
-Running recovery script...
-I:/system/bin/postrecoveryboot.sh process ended with RC=0
-Done.
-SELinux contexts loaded from /file_contexts
-Full SELinux support is present.
-I:Switching packages (TWRP)
-
-
-Partition Logs:
-/system_root | /dev/block/dm-0 | Size: 1242MB Used: 1239MB Free: 3MB Backup Size: 1239MB
-   Flags: Can_Be_Mounted IsPresent SlotSelect Mount_Read_Only Is_Super 
-   Primary_Block_Device: /dev/block/dm-0
-   Display_Name: System
-   Storage_Name: System
-   Backup_Path: /system_root
-   Backup_Name: system
-   Backup_Display_Name: System
-   Storage_Path: /system_root
-   Current_File_System: ext4
-   Fstab_File_System: ext4
-   Backup_Method: files
-
-/sdcard | /dev/block/mmcblk1p1 | Size: 115999MB Used: 33MB Free: 115965MB Backup Size: 0MB
-   Flags: Can_Be_Mounted Can_Be_Wiped Can_Be_Backed_Up Wipe_Available_in_GUI Removable IsPresent Has_Android_Secure Is_Storage 
-   Symlink_Path: /sdcard/.android_secure
-   Symlink_Mount_Point: /and-sec
-   Primary_Block_Device: /dev/block/mmcblk1p1
-   Display_Name: MicroSD
-   Storage_Name: MicroSD
-   Backup_Path: /and-sec
-   Backup_Name: and-sec
-   Backup_Display_Name: Android Secure
-   Storage_Path: /sdcard
-   Current_File_System: exfat
-   Fstab_File_System: vfat
-   Backup_Method: files
-   MTP_Storage_ID: 65537
-
-/boot | /dev/block/bootdevice/by-name/boot_a | Size: 64MB
-   Flags: Can_Be_Backed_Up IsPresent Can_Flash_Img SlotSelect 
-   Primary_Block_Device: /dev/block/bootdevice/by-name/boot
-   Display_Name: Boot
-   Storage_Name: Boot
-   Backup_Path: /boot
-   Backup_Name: boot
-   Backup_Display_Name: Boot
-   Storage_Path: /boot
-   Current_File_System: emmc
-   Fstab_File_System: emmc
-   Backup_Method: dd
-
-/recovery | /dev/block/bootdevice/by-name/recovery_a | Size: 64MB
-   Flags: IsPresent Can_Flash_Img SlotSelect 
-   Primary_Block_Device: /dev/block/bootdevice/by-name/recovery
-   Display_Name: Recovery
-   Storage_Name: Recovery
-   Backup_Path: /recovery
-   Backup_Name: recovery
-   Backup_Display_Name: Recovery
-   Storage_Path: /recovery
-   Current_File_System: emmc
-   Fstab_File_System: emmc
-   Backup_Method: dd
-
-/misc | /dev/block/mmcblk0p61 | Size: 1MB
-   Flags: IsPresent 
-   Primary_Block_Device: /dev/block/mmcblk0p61
-   Display_Name: Misc
-   Storage_Name: Misc
-   Backup_Path: /misc
-   Backup_Name: misc
-   Backup_Display_Name: Misc
-   Storage_Path: /misc
-   Current_File_System: emmc
-   Fstab_File_System: emmc
-   Backup_Method: dd
-
-/vendor | /dev/block/dm-2 | Size: 444MB Used: 443MB Free: 1MB Backup Size: 443MB
-   Flags: Can_Be_Mounted IsPresent SlotSelect Mount_Read_Only Is_Super 
-   Primary_Block_Device: /dev/block/dm-2
-   Display_Name: Vendor
-   Storage_Name: Vendor
-   Backup_Path: /vendor
-   Backup_Name: vendor
-   Backup_Display_Name: Vendor
-   Storage_Path: /vendor
-   Current_File_System: ext4
-   Fstab_File_System: ext4
-   Backup_Method: files
-
-/product | /dev/block/dm-3 | Size: 1789MB Used: 1784MB Free: 5MB Backup Size: 1784MB
-   Flags: Can_Be_Mounted IsPresent SlotSelect Mount_Read_Only Is_Super 
-   Primary_Block_Device: /dev/block/dm-3
-   Display_Name: Product
-   Storage_Name: Product
-   Backup_Path: /product
-   Backup_Name: Product
-   Backup_Display_Name: Product
-   Storage_Path: /product
-   Current_File_System: ext4
-   Fstab_File_System: ext4
-   Backup_Method: files
-
-/dtbo | /dev/block/bootdevice/by-name/dtbo_a | Size: 24MB
-   Flags: IsPresent SlotSelect 
-   Primary_Block_Device: /dev/block/bootdevice/by-name/dtbo
-   Display_Name: DTBO
-   Storage_Name: DTBO
-   Backup_Path: /dtbo
-   Backup_Name: dtbo
-   Backup_Display_Name: DTBO
-   Storage_Path: /dtbo
-   Current_File_System: emmc
-   Fstab_File_System: emmc
-   Backup_Method: dd
-
-/vbmeta | /dev/block/bootdevice/by-name/vbmeta_a | Size: 0MB
-   Flags: Can_Be_Backed_Up IsPresent SlotSelect 
-   Primary_Block_Device: /dev/block/bootdevice/by-name/vbmeta
-   Display_Name: vbmeta
-   Storage_Name: vbmeta
-   Backup_Path: /vbmeta
-   Backup_Name: vbmeta
-   Backup_Display_Name: vbmeta
-   Storage_Path: /vbmeta
-   Current_File_System: emmc
-   Fstab_File_System: emmc
-   Backup_Method: dd
-
-/persist | /dev/block/mmcblk0p48 | Size: 26MB Used: 1MB Free: 25MB Backup Size: 1MB
-   Flags: Can_Be_Mounted Can_Be_Wiped Can_Be_Backed_Up IsPresent 
-   Primary_Block_Device: /dev/block/mmcblk0p48
-   Display_Name: Persist
-   Storage_Name: Persist
-   Backup_Path: /persist
-   Backup_Name: persist
-   Backup_Display_Name: Persist
-   Storage_Path: /persist
-   Current_File_System: ext4
-   Fstab_File_System: ext4
-   Backup_Method: files
-
-/super | /dev/block/mmcblk0p79 | Size: 8288MB
-   Flags: IsPresent 
-   Primary_Block_Device: /dev/block/mmcblk0p79
-   Display_Name: super
-   Storage_Name: super
-   Backup_Path: /super
-   Backup_Name: super
-   Backup_Display_Name: super
-   Storage_Path: /super
-   Current_File_System: emmc
-   Fstab_File_System: emmc
-   Backup_Method: dd
-
-/metadata | /dev/block/mmcblk0p53 | Size: 11MB Used: 0MB Free: 11MB Backup Size: 0MB
-   Flags: Can_Be_Mounted Can_Be_Wiped Wipe_Available_in_GUI IsPresent 
-   Primary_Block_Device: /dev/block/mmcblk0p53
-   Display_Name: Metadata
-   Storage_Name: Metadata
-   Backup_Path: /metadata
-   Backup_Name: metadata
-   Backup_Display_Name: Metadata
-   Storage_Path: /metadata
-   Current_File_System: ext4
-   Fstab_File_System: ext4
-   Backup_Method: files
-   Mount_Flags: 1030, Mount_Options: discard
-
-/data | /dev/block/mmcblk0p80 | Size: 50309MB Used: 8171MB Free: 42137MB Backup Size: 8171MB
-   Flags: Can_Be_Mounted Can_Be_Wiped Can_Be_Backed_Up Wipe_During_Factory_Reset Wipe_Available_in_GUI IsPresent Can_Encrypt_Backup Use_Userdata_Encryption 
-   Primary_Block_Device: /dev/block/mmcblk0p80
-   Display_Name: Data
-   Storage_Name: Data
-   Backup_Path: /data
-   Backup_Name: data
-   Backup_Display_Name: Data
-   Storage_Path: /data
-   Current_File_System: f2fs
-   Fstab_File_System: f2fs
-   Backup_Method: files
-   Mount_Flags: 3078, Mount_Options: discard,nobarrier,reserve_root=32768,resgid=1065,inlinecrypt
-
-/super | /dev/block/by-name/super | Size: 0MB
-   Flags: Can_Be_Backed_Up IsPresent Can_Flash_Img 
-   Alternate_Block_Device: /dev/block/by-name/super
-   Display_Name: super
-   Backup_Path: /super
-   Backup_Name: super
-   Backup_Display_Name: Super (system vendor product)
-   Current_File_System: emmc
-   Backup_Method: dd
-
-I:No recovery folder found. Using default folder.
-matches was 2 on <</dev/block/mmcblk1p1 /and-sec >>
-I:Attempt to load settings from settings file...
-I:InfoManager file '.twrps' not found.
-I:No recovery folder found. Using default folder.
-matches was 2 on <</dev/block/mmcblk1p1 /and-sec >>
-I:Backup folder set to '/sdcard/TWRP/BACKUPS/ZY227BSK6V'
-I:Unable to open: /data/recovery/.version. Data may be unmounted. Error: No such file or directory
-matches was 2 on <</dev/block/mmcblk1p1 /and-sec >>
-I:TWFunc::Set_Brightness: Setting brightness control to 2047
-I:Recreating /data/recovery/ folder.
-I:Path /data/recovery/log.gz does not exist. Unable to copy file to /data/recovery/last_log.gz
-I:Starting Adb Backup FIFO
-‹ øÅºj í=Ùrã8’ïú
-¾¹;Â¢HŠ:¬N„ÏÚŠ.W9|t×ìƒ"A‰c^KR²T±¿™ x”\n»bÖQe[ÈDÈ§
-'+‚x¥<şu§ŒÕ™ªÛº1Ô†wìÚÔQ’Xyp
-å†,e¦ÚşMæŠ~6ÓÊoià)ædüûàóâË&Vü $ÊÉÈMb?X6ùÒ^9ŞŠ£•>ò7±[Iœ"'Ïí¼H2gETmnbøUO/!¹'…BvA^œ*O
-ÇT¢Ä#ŠäÎ2$ŞàîşÛÕÓå£ıôpm_ıëëùíçKûîüşñóãço_”…¥Ù†@¿n’Mì)Ë,X­‹˜ä9ë$éd”ïó‘G¶KòQ:…ŸdÑ(OÜ‘éÌMMÓÔÀpGğ¨´¡¦§£¥ã>‡Hiä¼œÆÃe8ªiŸ@{Ÿ ÷‘³k¶hhæLñ³$z¿6¡»İîã_7ÀáÅâöEY(ğ™J¸ÑO‘%¡R$´k´²}ııòËÓÕµ}ıõòş_w×WöÅùåOwM^6Ğnï€/ç_?-Ã¯çö·Çsûéîêüñú¾ó€º¶I•Ë$ŠœØƒ®¬*_‚ø»Î?ße	°&Ç¢)ÜQFÜdK²½êçˆñyqO¯Ú¨Ny]™s™§ ^UfgIRœ(~z$SqdÙë GÒŒ¤NF†ÈÄ–oR’))Ú
-ª0f…¼ç(ÎÑ2LÜç‘5Ñ(ZBCLŞ£å~;á]Pº½HáxNáœÃğ\'ó„b¤,– Q»Bá–Ä^’HÇÏ`?=~ãøø9ångÒ,ñ6n!ïştwÆÇ»S’îöÇ+–‰È±%Šédp½xŠ× ÅàŠ?tVå~äë$Æ,]¨=ÎÁ¥µ•±,l*"7ã›`·IíÇ "°	2ôƒÚ¼YA‹Ñ5ğÖ³áĞĞğßdŞC¡tXQI|?'œ•ÔR§äB÷óQ†FU¸Úºí›¤‰»î¡ù„!øQPå´@Qmr¢kt­ÌÇ¢#éÒ‘qÆŒ<‚¶qZbé³ùl<™º®M{¨_5î.³ /ÀİÓ¡v64æÃ¡~6œ˜ğ›`n¨]LÂjphhRY áç$KT7Û§E¢z‘íßÙ„…ıLöj’Òàf£?w
-u‹HbˆhJÌ’ƒeF` t)RÜ çºsŠõB%^Dİõf*‰"WÄaÖs9™£h~åc°væD^Ÿ_]õ'ÉÂoüÜ$zÅÀ9Å9 oÇó¨ÏpByÈh:aÑÂ£Š ­İooUˆô¤ªrsqMc0‰ÁTNÀœR½GwÉ‡Æd:t‹\J(Û/~K7æ·R,wMÜç4	âÂò)«$¦~´ì-?³T6Pûb¯€†£S¹[T[ÕüyC3Ó©Sˆé¥‡†ôNÙB+>d=qà“¼`6Œƒa&M)BSË|6ºu´Òª¦~ñ	Ïü ™{Yxê*¿@PÁĞ y,YMÓŒJZv‘A0 …º‹ÂºÓªòDÇÍ­âG±¦í”Õ9â½ubø-_Ç»á<&ß‡¨&L›Jy-ª0*éR û	÷˜'%	RÇ†§ „A1” ®ºWå²Ü·4aÅT5@ø£¤`ÿ‰½g®ÈV5OLuwB;áêÎ0Š>”stâOŸUU<<iŠEç+«ÌI×›+Ã!ejŠzØå&ÁÙf„^­U×æÚ©²&˜s‚ÛkÚ ç.ÿêşÖ¾ùv{şh¿øt?‡/ê«?}úbß}ş~ı¥„Şº8·üwªÆ›h	#O|%Œrìk‘¤I˜¬öŠ>8/’(piBU¸.!W’,ªÜŒaoÈ®!i~¸¼¿¾şj_@šü‡ı~ùöí±•V¿…¸&ï¿´ğoN¾p¥Oa*v±Pò“å·QñZ0bQÛçØÊ÷Û/MÅÿy£êRnÙÑ%:7¬8I¸AıE}¿â:!×ap?T]Õè×ê
-ÓI(„ôéLŸíÊÄ"WvESöøí¿k±cK›œ'k¨,Ş:Y€iB§|=¤Cî&ËÁw¶ )ğ ‹8Kq/Aá®ìÎ•ß™»©“’”ÄÊ UœĞ·DiÎmÊ î¤dóñH-Mñc”Šåª¡1Oâ…ò5AEY3Ç^r:ÉÕ•ˆ“xH3=Ö§è‹Ÿnö/pÔüÅMÀıò±ˆ­·’z@æÄm&õˆí3`u ´=:·•´íœ Šyu·âÙùN1ôQ­†‰²VöK$?Å¥  ïYúX×fıLA¼ 9ıäk>ë©^¶<€d2…\yqrÅÀÕüCÏ‡¥üóŸĞ;`r9ÓäÃ”ÇØ’okåô“–`òSÎ‡G¸d5âk£ÿş—aÌ.ş˜şy2xJ=Æíj†ı)œ äfç–Î ¸P¾4}Sÿ“ëÀX=ÈøŞT—Í”ÿmÍœËÕz€ì<äíÅ@Q”È9!˜\:±}Al”ñì§Tùœßñ,A7èÄìÏÑJÁ:ç!¤$1}ØWtZ¾èmë\è	÷öW$ªb¦(v9õéË‘Û¤è¨~ãK3|…‚§À¿c­ËL"ãÂÆ¸e?P´…B'35É[R¬0[ÏĞŒœ&ü48xTÚ(xTéìo4r6
-^ñ÷:I
-ë¯Êc&Ôı€H:ñjƒÑh´yâñß'Zd@4ß~Ñğ#ˆ~O³ÍMûîñcè^ÜİWüDq¾øD½ ºşÅò?Â@ªıDã ú*å‘ êşø<…pÉVL9
-R”*4Íy{X¸ü›^Ş@º
-³	Èw±ãJá‘®¦1$³$‹L4}|ª,ƒde¨¿Ó¬ôsì†›ŠWO16¥IVdóQñ­oRê¬ıš©6¦c²2£[Äyá„a·˜îôØt—›.fJ€­É\Y%<$$µA‡`6‡+°R,ª}M»!q2Ø”w!Œ¢]ÍnA¥Ånpª¶ãò]µ”•Úø»°t¿AÓı“è4åF*B'eònKA/A*6ãmØ%Æöep¢ÒËWº”^¦ïa²©€|HˆJ½¦‹íT	° è‡/éCPZ˜c ı™ıâd1Ë«Ù=½bP4N½$‘¸Z8>Pv2¬ÔÉó—$ózúmêÀÆ"¡+$OíE¤ãërJ¸cç¾–^/\€éƒñ5ö.¸Èöö”Ì´C„¢|äšQõKä •vñ¬N/`#…”ÎFF±·¥fê;y6,wiòRîuqQæp“¢ÑµlAÏËr·ƒHp…»!Ç*ğ6XfLç+Œ21}kºÁ>K%ó'Lı@ôı@)Ëk°Èn\0èS&„õ8@\Œ‘9íˆE™Gl€{¼»N’œx ¨˜Ê [ç;@ˆ)<G:FË]G‰À &¼'º×ò0ÙcÉ¼¢c«^½`117ÑCÓEÕ	û¼KC—¶ê³K1”{37qÜ;ºc½+Dë
-¡dòVôëöÙKÉnÍZäñ%Ko¤b._µñ‰™;)(wÆ«4é¤ 9 -“lÁ`À55¿ÊÌÑÕ+İô4A¹y¾,"Çu</³.ç‹ËÙb¢-ÎõÅü|1×8Ô-â¦…Åı`	qÏÒvš66ª¢µ³,wä­<ñ'«@x.ÒŠ1‰	ktH´·@ãæ%5"‰Ü•¥WŸ3`Ybİû«*a'£º°3O*=n`â¡›À€A…5NS3İõÇSß››ŞÙx6'ºé9¾1™Sßt|W#³9ü4Î–é;“ÉÜ×´åÒXºZ—ì“b'\YùÚú]°³]Ú|?Û‚)˜Ğ):<¬Qk£7ÛA
-â-ÌçğX•é)GY{’×‚p², È§ ›šKÅÒ¼U·émœ0"‹îç–… áA¼ÙY)ZbÛ´trˆÛ±gEyT†¼·F³¥„65i(;,`ÑÓ-İR<¦a}44SÖšºP>¥ÛZÉò<²1éµ´úëf<×úQ™OCgêós–93éÕÜ[»AÔº½¸UmÈÔÉ¦Ljşüll: CÃ€ékM„{ªÍ$Æ¤óÙ&Y›Ÿ›µèqYië­ğİë:`:*Õ{qkfĞ­1l© ÿÓaš¼sNf’hšf6í‡íÍÙ•Ú]÷âá&Cğyà¢(‚DÖ“d*Ø›˜Š	êxKÏ2tp¦ã‰Ù‚qPXú¾æS]«´X×M}bÌô3¥q,ÊO&æÄœ"–®Ú¦b|¹¿eíNBrÔæ³9´aLZ°Ù’¸ğ,}>™'cèG\îDâ'Út>3Û\¿ğÓ4<pC3À­±©ëãŞ6öDÄ)¸5 Šˆ‰©ô¤‹ŠÃºÅ£ñ$U<¿0fc¢<=^Ò3†"ºº)\KŸiSc<5'mîÇ€QF0V'X©½Ç$S‘¢vfÌUàÌ™f¶ëú`&$K3<è%÷’ĞÁ…–Ôf*2b?º>z¸3ÎUPS›¨ Û#F)áÙZàÉ‡`øÔ–GÀ°1Lª¬Ù.cÔqŞ.>¤PeõÛüw…[Iˆ>-
-N¼ñ!åÌZÍ0.@ÄìŒ®†½JZ%Å€ë¢ãÙ6§º×€òçV‹y¼|Ÿ¢;[Õ%˜Ñp*u¡:[ˆ=ş[•<¶Y‰Ãìà(º®tF®ô«"é¢$­h)eî=[<i•£c³“Ü!äv ´tI-<4Auéşú‹}½´ë¥è1É‹}ÕD0Ì&í²á\Ş2uî0Cw×`ù†AÏVë½Ã³“¬"
-îñ`§ì¦•JÛ‡dİÎ7)®Ï.œlE
-:cÜPÔ€N§Ş_ «Æ9„2˜‘¹¹Å3[D`‘q–ÍÁš]åUÖ'ÔaG´·6¸av-€¨ÔRp[ƒ¥(¯WÕC-H”¨…şŞ×dB¢ºìåY>¤°¤éuİt£:ËÀr²hj·sGÄ™ÿQ„±aõ@¦¦¼ò¡`Óh©dçU:)V‘(eIÔÊ¼¡–mˆ¨—rx[1å8¯×ÌƒmHT³ÿ2£yCoÎÀ­è&•†Ö«Páh'8Ş±¾ô¦0%ŞkÔÿ¸¼šwGyXQ:Öq¾.Kv‡ûŞ@;ÆtŠôJÆSÜ#Ìgô£Á#ËÍj…Òjøh6’£°öÁ°S«7 6ğú‚bEŒ`_p” È¤ígƒdK½²Qå[ìE »˜Nà¯)¿4SÑrˆ_š9¤-”Wé…PC¢-QÚà†.´ ¢HÁm¢¼^ş‡ZÈ¾…şrçíM{úñxöÓĞ—Ñ;S‡Æ)r´%wz,G8ê`9^¯s-éôùMœS€h¸}À'O¡Fe&õš‹¨—OAö«â• ÆšF¡{v	h?mz>Tà9Û'2°ç„ÛàYİb’P[ì
-¼ŸåüØ¯0Iö:P#¹=‹Ô9ìÙQO£”©y„  â‘]’ÒEÉ$öœlÏ¸'À‹5ÁeÆ¡»)ß·ŒÆ&'ÿŠn½Èñ¶AN ô8_ö7ÎÌ³éÌ8›H0A‰v5ª®™óÉlªiÌíQL\§åò¡ßx`ôÃš´€‚‘8Åğ{”[S3’BvÖD7š ˜\4„±Ÿtì¤)=UÃÎXáSàöft«ÒzÃş.uá»ƒphÛ!á<\2²ƒÃ¨œİÑ¥gè‡”ÕÃ4æs	6=à¶%Ãœ=Î ?3ÜÇî#¾Á«hÊÃ¥›ËÍ1ì9±š÷†åxj±+üj7Fï†	†ÁR5,øİPs0¦ê 'cÜ…àåÖœ™(ú>•İ¶¯>–BõK&¨ÜñôXí—ÀĞ=ûÙ–†É¸D÷µîH3ÊA’9©Ç;P9©g’AÕêRİŠÿw°*XvÇTõæJÀÑhÒÇ£I?‚MÜ_§*Øg\–òƒ])®¿$jyÙ/OªÛÈVã2ò€ò‘Ş¶¢›ÜÓRz»ºEŸaÈm—İ†j ¸;3·‰QÇ5N«}.ŠYë[ÚÀÎj
-·û€•;êÛé†LˆgÚ6>ÇvªbJ£,§W4Jˆ·‡A®]_Å¨Ä¹~Ùhíöv>;1[ÕlİZ¶ø­âzÅZ¡Š^+EµGlÉ›U*=ÒVd¡ˆyî]K+hê™àtN+Gï,‡IáX`‰7ä«Î
-„‚ÅnäÄˆEw°ö ×™^zAŒÂÛJj.WCö[o]ºa4¤¦[:;¡ááäp u†„FmåÏAÚC`X‡Ç¾2</y‰WUêÃˆÁf•rõzşÛ3Òş4YÌNW9xv$«@£`BBŞs‚>¯»¦âñ5 /¦›t Z¾æ‘½N’çŒín]¶?Ç©KË9PíÉ	a7NÀ÷áº¥‰Ç<Ø•õ
-`Ó¸a§ÀŠbNLŒÆœh2X9$Ó”‚«™“±.Ïœè2<q&ÛÖÄ¾ñøQ¹•ÒÏƒÃoº/4¢S<&pšxÑ)Ç;e®ı´ Ÿ²ü?|Ê²÷ÓšF9¸’@Y‹âU‘›Åæ:v»xÖ¦ô’¶“vš„»·ş½]Å“©cÂxÔgúX<t|põÔ•5¬ªœhÛœgUd¥,ƒ¼œwìHÈß_±î?]|g TpYî:±”\±ÕÜÙ‡<<Œ«>.Ê¶=Äâ² ^jÆ’˜©QŒ8ù„Èj•5î[ƒ˜àé 6{ã·[)Ñ&_ªìı4š¨@4ªr} Amùy«ïLD½‘,_¦¨áâjBÖXJ·µëuÖ^Dè…K– ÷h&ÕƒÄÓ¨h7‡j-6t6
-é4–½´MÂMÔÈlzÌ£™@Õ¸4Ù´ù!i»|_ˆüà¹»úŠ5Ûõc7šwÂÑ˜J$¦Èëò…úL<å%(ÖÊı%è:>ÿ¢®¿àq¥<Ì§°L]-¡ğÙÕ9¿›M*e¾7©yùğ‡zğ Ü`pWİ¾ş’¬òÅ y·¾}µ˜>›VŞ(Öaªr{¡<åø^“nŒÏàÃMF 2†ßø•ğ¡âıã[šezÛÇ)>Ğ‡
-Úø(ı-÷€d³Ë¿Hç.ƒÀ™íûo$cWÅ‹Èì>0–?°ÓByç†rÍ	ñr·Î±¦ä4å÷•w…IÙE3d)¨s•™=4àgáÛb«ïW²Ó'ggg•ôÆãJv™Nº”Ş/¥Ç?ş¤õ‡úf9Ûç['éÊRÛŸ>+÷$J¶ô-ûÿrr›{Z›½»@eÎ_•¤œdÓ–Š“ò7ˆL‡îğq¥EuqşUúSñLT¢ÛÀÍ’‡+Q‹€¶5n©XŞn©ı
-…L—Øññ~5ò¢G¶$Õ#(¿}¼+yo¾Z(ÓÉd<[
-^AòT]*t*u›šo{} á^%´ˆ"¼à¥mù]´Íœóx)3şNáaêB_(Y|ÿãÕ3’G%R"öKå…P6.
-â¾i£	i$!¬Šp¼5	Ñ÷>ç)óÆZ:m¸ãAü„§Bz2W•»2?•»"[£v)Cí¦Ş!ôlä}t³£b¡išU83ÍF<ë†2
-üÕ©ˆ!ŠæO6W„S—·Å³í–3t¡øX+¹wN@ÊWZ»¢×Ú>›×©|0+a	yƒşjiEiİ±Q‰âj ÚòJ@_…£-‰ßYf¸¦p4‚Ğ;uô0ú¢Ç;ÄlJ”ÁÕãÅ7Q ei›û%…ë;…‡©w½«3£«5GÎ×€œŸÃéDÀ…P—·ÅP—wÜV·¼ıX+¹÷_¼‘Çis^ëü´ö[•Ó2D¯õöÙÒc¿9—¸,6(‰Ëª—% X±ühK"Å÷çŠŸ•Ì˜U›óù{äV³³šµ¹ûo	-ti½k¢ÊT–ótÒßzeZcÙàíKò‚7Jj"	Ş·|h’L¸édÃ"„gÄ"àxk¢ïj8_§Yg·®µS^ôİê^àŸä «ƒQ¿œçõúŞhÔyÚ\ŸÕ.Ï4ôñ¬+p†ñ·–‰®6x¨Á¾qè; ÂáS’ÇÔI]óõYŞ!è²ÿ3úVÈuõÀÅÏiÒ\²~x%Õ¢+©Iµç æt©wI5Æ7ü¼GcJĞ«4f¬Íæ}s'KvÁö”?iÎöHÆÆl:Ç¢UàYº6œ1nR³{îÿÿ8å{<Nùkp=¯ÿ:}Æª|&ƒÿê	ãoOù	RŠÿ1!zx'?i<ãşËzÿÆçg»/ÉpS«–‚FÕŞµL%röÊ’(ö\(A\ãEôC/¿m<ë	ğ{â–w†Óxçu¼“•ºúÑùËN ¨ŠGø4
-#|èVvòÂfÿz±°¬j  I:PageManager::LoadFileToBuffer loading filename: '/twres/languages/en.xml' directly
-parsing languageFile
-parsing languageFile done
-I:Translating partition display names
-I:No recovery folder found. Using default folder.
-matches was 2 on <</dev/block/mmcblk1p1 /and-sec >>
-I:Backup folder set to '/sdcard/TWRP/BACKUPS/ZY227BSK6V'
-I:checking for twrp app
-I:App not installed
-I:Switching packages (TWRP)
-I:Set page: 'main'
-I:Set page: 'clear_vars'
-I:Set page: 'main2'
-I:TWFunc::Set_Brightness: Setting brightness control to 5
-I:TWFunc::Set_Brightness: Setting brightness control to 0
-Atomic Commit succeed

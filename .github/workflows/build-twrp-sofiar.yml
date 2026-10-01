@@ -210,6 +210,13 @@ jobs:
             echo "== $RC"; grep -n "LD_LIBRARY_PATH" "$RC"
           done
 
+      - name: Workaround - Android 11 legacy keystore (synthetic password)
+        run: |
+          # TWRP 12.1 търси ключа на ПИН-а само в keystore2 (Android 12+);
+          # Android 11 го пази в стария формат -> "key not found".
+          python3 "$GITHUB_WORKSPACE/tools/patch_vold_a11_keystore.py" ~/twrp/system/vold/Decrypt.cpp
+          grep -n "sofiar" ~/twrp/system/vold/Decrypt.cpp | head -5
+
       - name: Build recovery image
         run: |
           set -o pipefail
