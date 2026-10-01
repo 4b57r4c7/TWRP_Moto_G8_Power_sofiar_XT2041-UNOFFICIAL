@@ -145,6 +145,10 @@ TARGET_RECOVERY_QCOM_RTC_FIX := true
 # Батерия: няма /sys/class/power_supply/battery, а health HAL не тръгва ->
 # четем директно от sysfs (без кавички - TWRP сам го прави на низ)
 TW_CUSTOM_BATTERY_PATH := /sys/class/power_supply/qcom_battery
+# Трябва изрично: в TWRP Android.mk проверката за този флаг е ПРЕДИ реда,
+# който го включва автоматично от TW_CUSTOM_BATTERY_PATH -> без него
+# пътят се компилира, но не се ползва.
+TW_USE_LEGACY_BATTERY_SERVICES := true
 # Няма timed_output / leds vibrator -> без вибрация (спира и спама в лога)
 TW_NO_HAPTICS := true
 # Ползва Moto-специфичния init.recovery.usb.rc от common tree-то вместо
