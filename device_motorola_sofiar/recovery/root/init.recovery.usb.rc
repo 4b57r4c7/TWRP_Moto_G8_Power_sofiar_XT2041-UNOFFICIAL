@@ -40,6 +40,15 @@ on init
 on property:hwservicemanager.ready=true
     setprop crypto.ready 1
 
+# (не е USB) Декриптиране: ядрото пази FBE ключовете в самата файлова система
+# (ro.crypto.uses_fs_ioc_add_encryption_key=true). TWRP демонтира /data след
+# старта (Setup_Data_Media) -> ключовете изчезват -> при ПИН-а не вижда spblob.
+# Второ монтиране на userdata държи файловата система "жива", докато
+# TWRP демонтира/монтира /data, и ключовете остават. Нищо не се пише.
+on fs
+    mkdir /datakeep 0700 root root
+    mount f2fs /dev/block/bootdevice/by-name/userdata /datakeep wait noatime nosuid nodev discard,nobarrier,inlinecrypt,reserve_root=32768,resgid=1065
+
 on property:ro.boot.usbcontroller=*
     setprop sys.usb.controller ${ro.boot.usbcontroller}
     write /sys/class/udc/${ro.boot.usbcontroller}/device/../mode peripheral
